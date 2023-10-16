@@ -7,4 +7,6 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('write/', views.write, name='write'),
     path('loading/', views.loading, name='loading'),
+    path('payment/', views.payment, name='payment'),
+    path('intro/', views.intro, name='intro'),
 ]

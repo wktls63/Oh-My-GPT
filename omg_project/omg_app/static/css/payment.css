@@ -1,0 +1,59 @@
+.main {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap:80px;
+}
+#banner{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+}
+.title{
+    font-size: 32px;
+}
+.tiers-container{
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
+    max-width: 1440px;
+    padding: 0px 32px 32px;
+    gap:32px;
+}
+.tier{
+    display: flex;
+    width: 20rem;
+    height: 30rem;
+    padding: 3rem 0.5rem 0.5rem 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0px 1px 6px 0px #DADADA;
+    gap:30px;
+}
+.recommended{
+    box-shadow: 0px 1px 6px 0px #F9AB00;
+}
+.tier>h1{
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0px;
+}
+
+.pay-button{
+    display: flex;
+    width: 8.60625rem;
+    height: 2.25rem;
+    padding: 0.5625rem 0.9875rem 0.5625rem 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.25rem;
+    background: #1967D2;
+    color:#FFF;
+    border: none;
+}
