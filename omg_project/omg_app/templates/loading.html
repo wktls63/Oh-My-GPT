@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loading.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% include 'nav.html' %}
+
+    <div class="content">
+        <div class="banner">
+            <img src="{% static 'img/loading.png' %}" alt="">
+        </div>
+
+        <div class="loading-content">
+            <div class="loading-title">
+                <a>나만의 GPT 생성 요청을 전송했습니다.</a>
+            </div>
+            <div class="loading-text">
+                <div class="loading-inner">
+                    <a>보내주신 데이터를 기반으로 AI 모델을 생성 중입니다.</a>
+                    <a>데이터의 크기에 따라 작업이 5분에서 1시간 정도 소요됩니다.</a>
+                    <a>작업이 마무리되면 이메일로 알려드리겠습니다.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
