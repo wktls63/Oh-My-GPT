@@ -2,11 +2,11 @@
 <nav>
     <div class="navi">
         <div class="navi-inner">
-            <div class="logo">
-                <img src="" alt="logo">
+            <div class="logo" onclick="location.href='{% url 'index' %}'" style="width:40px; cursor: pointer;">
+                <img style="width:100%;" src="{% static 'img/logo.png' %}" alt="logo">
             </div>
             <div class="nav-buttons">
-            <a href="#">
+            <a href="{% url 'intro' %}">
                 OMG 소개
             </a>
             <a href="{% url 'payment' %}">

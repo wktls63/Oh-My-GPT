@@ -15,3 +15,6 @@ def loading(request):
 
 def payment(request):
     return render(request, 'payment.html')
+
+def intro(request):
+    return render(request, 'intro.html')
