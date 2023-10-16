@@ -1,11 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <title>Document</title>
 </head>
+
 <body>
-    
+
+    {% include 'nav.html' %}
+
+    <div class="main">
+        <div class="main-content">
+            <div class="main-box">
+                <div class="main-text">
+                    <a>당신의</a>
+                    <a>든든한 AI 파트너</a>
+                    <a style="color: skyblue;">Oh My GPT!</a>
+                </div>
+                <div class="main-button">
+                    <a href="#">
+                        <button>
+                            나만의 GPT 만들기
+                            <img src="{% static 'img/arrow-right.svg' %}">
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="main-img">
+            <img src="{% static 'img/index.jpg' %}" alt="">
+        </div>
+    </div>
+
 </body>
 </html>
