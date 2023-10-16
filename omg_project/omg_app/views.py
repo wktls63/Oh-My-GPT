@@ -9,3 +9,6 @@ def chat(request):
 
 def write(request):
     return render(request, 'write.html')
+
+def loading(request):
+    return render(request, 'loading.html')

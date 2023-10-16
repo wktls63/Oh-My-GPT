@@ -1,0 +1,43 @@
+.banner img {
+    width: 100%;
+    height: 35vh;
+    object-fit: cover;
+    opacity: .7;
+}
+
+.loading-content {
+    font-family: 'Pretendard', sans-serif;
+}
+
+.loading-title {
+    text-align: center;
+    margin: 60px;
+}
+
+.loading-title a {
+    color: #254c76;
+    font-size: 45px;
+    font-weight: 700;
+}
+
+.loading-text {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loading-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    padding: 40px 70px;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    gap: 20px;
+}
+
+.loading-inner a {
+    font-size: 20px;
+    font-weight: 400;
+}
