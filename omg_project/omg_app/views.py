@@ -12,3 +12,6 @@ def write(request):
 
 def loading(request):
     return render(request, 'loading.html')
+
+def payment(request):
+    return render(request, 'payment.html')

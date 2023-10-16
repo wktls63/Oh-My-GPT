@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}?{% now "U" %}">
+    <title>요금 안내</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    <div class="main">
+        <div id="banner">
+            <p class="title">내게 맞는 OMG 요금제 선택하기</p>
+            <p class="sub-title">학업, 취미, ML 연구 등 다양한 목적으로 OMG를 사용할 수 있습니다.</p>
+            <p class="sub-title">OMG은(는) 항상 무료로 사용할 수 있지만 컴퓨팅 수요가 많은 경우 필요에 따라 유료 옵션을 구매할 수 있습니다.</p>
+        </div>
+        <div class="tiers-container">
+            <div class="tier recommended">
+                <h1>OMG Pro</h1>
+                <button class="pay-button">월 $9.9</button>
+            </div>
+            <div class="tier">
+                <h1>OMG Pro+</h1>
+                <button class="pay-button">월 $49.9</button>
+            </div>
+            <div class="tier">
+                <h1>OMG Enterprise</h1>
+                <button class="pay-button">월 $99.9</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
