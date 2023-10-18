@@ -24,3 +24,6 @@ def login(request):
 
 def center_write(request):
     return render(request, 'center-write.html')
+
+def center(request):
+    return render(request, 'center.html')

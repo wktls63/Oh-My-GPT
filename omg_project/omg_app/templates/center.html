@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="{% static 'css/center.css' %}?{% now "U" %}">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    <div class="main">
+        <div id="banner">
+            <p class="title">고객센터</p>
+        </div>
+        <div class="information">
+            <div class="write-button-container">
+                <button class="write-button">글쓰기</button>
+            </div>
+            <div class="table-container">
+                <table class="center-table">
+                    <thead>
+                        <tr>
+                            <th>no</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>test</td>
+                            <td>이준형이다!</td>
+                            <td>오늘</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>test</td>
+                            <td>이준형이다!</td>
+                            <td>오늘</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>test</td>
+                            <td>이준형이다!</td>
+                            <td>오늘</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
