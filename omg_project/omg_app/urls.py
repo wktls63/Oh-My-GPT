@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path
-
+# from .views import 
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -9,4 +9,9 @@ urlpatterns = [
     path('loading/', views.loading, name='loading'),
     path('payment/', views.payment, name='payment'),
     path('intro/', views.intro, name='intro'),
+]
+
+# user_views.py
+urlpatterns += [
+    
 ]
