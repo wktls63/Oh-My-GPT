@@ -36,8 +36,8 @@
 }
 
 .main-text a:last-child {
-    color: #0f6995;
-    text-shadow: -5px 0 #b2e2d3, 0 5px #b2e2d3, 5px 0 #b2e2d3, 0 -5px #b2e2d3;
+    color: #A8FFFF;
+    text-shadow: -2px 0 #A8FFFF, 0 2px #A8FFFF, 2px 0 #A8FFFF, 0 -2px #A8FFFF;
 }
 
 .main-button {
@@ -81,6 +81,7 @@
     object-fit: cover;
     object-position: center;
 }
+
 .create-button{
     overflow: hidden;
     position: relative;
