@@ -2,8 +2,10 @@
 <nav>
     <div class="navi">
         <div class="navi-inner">
-            <div class="logo" onclick="location.href='{% url 'index' %}'" style="width:40px; cursor: pointer;">
-                <img style="width:100%;" src="{% static 'img/logo.png' %}" alt="logo">
+            <div class="logo">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'img/logo.png' %}" alt="logo">
+                </a>
             </div>
             <div class="nav-buttons">
             <a href="{% url 'intro' %}">
@@ -12,12 +14,12 @@
             <a href="{% url 'payment' %}">
                 요금안내
             </a>
-            <a href="{% url 'chat' %}">
+            <a href="{% url 'chat' %}" style="color: #085E9C;">
                 나의 GPT
             </a>
             </div>
             <div class="user-buttons">
-                <a href="#">로그인</a>
+                <a href="{% url 'login' %}">로그인</a>
             </div>
         </div>
     </div>
