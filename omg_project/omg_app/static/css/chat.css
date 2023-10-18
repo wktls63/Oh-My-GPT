@@ -1,5 +1,10 @@
 body {
-    background-color: #f8f9fa;
+    background-color: rgb(15, 105, 149, .7);
+    /* background-image: linear-gradient(
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1)
+      ), url('../../static/img/index.jpg');
+    background-size: cover; */
 }
 
 .bold {
@@ -79,7 +84,6 @@ body {
     height: auto;
     background-color: transparent;
 }
-
 
 .chat-thumb-text {
     margin-top: 4px;
