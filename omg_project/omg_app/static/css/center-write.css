@@ -29,6 +29,7 @@
 }
 
 .board-list {
+    padding: 0 60px;
     padding-top: 60px;
 }
 
@@ -84,7 +85,7 @@
 .write-table textarea {
     border-radius: 4px;
     border: 1px solid #E5E5E9;
-    background-color: #fff;
+    background-color: #F6F6F6;
     padding: 10px;
     font-size: 0.85em;
     width: 100%;
@@ -105,12 +106,12 @@
 .submit-button button {
     width: 160px;
     height: 45px;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .submit-button button:last-child {
-    background: #3D404B;
-    border-color: #3D404B;
+    background: #375B98;
+    border-color: #375B98;
     color: #fff;
 }
 
