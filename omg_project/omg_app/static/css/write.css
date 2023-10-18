@@ -13,16 +13,19 @@ html,body{
     justify-content: center; 
     gap:20px; 
     width: 40%;
-    padding-left: 4em;
+    padding-left: 2em;
 }
 .title{
-    font-size: 52px; 
-    color:#254c76;
-    font-weight: 500;
+    font-size: 3em; 
+    color:#091B22;
+    font-weight: 700;
+    line-height: normal;
 }
 .sub-title{
-    font-size: 24px; 
-    font-weight: 800;
+    font-size: 1.5em; 
+    font-weight: 500;
+    line-height: normal;
+    color: #C3C3C3;
 }
 .write-form-container{
     width: 60%; 
@@ -34,40 +37,76 @@ html,body{
 }
 .write-form-container>img{width: 100%;}
 #gpt-name{
-    width: 520px;
-    padding: 10px;
+    width: 36rem;
+    padding: 1rem;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 1.5rem;
     border: none;
-    font-size: 40px;
+    font-size: 2rem;
+    line-height: normal;
+    font-weight: 400;
 }
-.data-type1, .data-type2{
-    font-size: 32px;
+.data-type1{
+    width: 36rem;
     border: none;
-    border: none;
-    border-radius: 5px;
+    border-radius: 1.5rem 0rem 0rem 1.5rem;
     box-sizing: border-box;
     cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+} 
+.data-type2{
+    width: 36rem;
+    border: none;
+    border-radius: 0rem 1.5rem 1.5rem 0rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1rem;
+}
+.data-type1:hover, .data-type2:hover{
+    border: 0 solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    -webkit-transition: all 1.25s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1.25s cubic-bezier(0.19, 1, 0.22, 1);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
 
 .type-select{
-    background-color:#254c76;
+    background-color:#383838;
     color: white;
 }
 
 #select-data{
-    width: 520px;
-    font-size: 32px;
-    padding: 10px;
+    width: 100%;
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: 1.5rem;
 }
 
 #form-submit{
-    background-color:#254c76;
-    width: 520px;
-    padding: 5px;
-    font-size: 40px;
+    background-color:#A8FFFF;
+    width: 100%;
+    padding: 1rem;
+    font-size: 2rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 1.5rem;
     box-sizing: border-box;
     cursor: pointer;
+    font-weight: 600;
+    line-height: normal;
+}
+
+#form-submit:hover{
+    border: 0 solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    -webkit-transition: all 1.25s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1.25s cubic-bezier(0.19, 1, 0.22, 1);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388;
 }
