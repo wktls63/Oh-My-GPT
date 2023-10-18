@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# USER
+AUTH_USER_MODEL = 'omg_app.User'
+
 
 # Application definition
 
