@@ -25,12 +25,12 @@
         <form action="{% url 'loading' %}" method="POST" class="write-form-container">
             {% csrf_token %}
             <div style="width:90%;">
-                <input id="gpt-name" name="gpt-name" type="text" placeholder="GPT 이름">
+                <input id="gpt-name" name="gptName" type="text" placeholder="GPT 이름">
             </div>
             
             <div style="display: flex; width:90%">
-                <input class="data-type1 type-select" name="data-type1" type="button" value="공공 데이터 학습">
-                <input class="data-type2" name="data-type2" type="button" value="원하는 데이터 학습">
+                <input class="data-type1 type-select" name="dataType1" type="button" value="공공 데이터 학습">
+                <input class="data-type2" name="dataType2" type="button" value="원하는 데이터 학습">
             </div>
             <div style="width:90%">
                 <select id="select-data">
