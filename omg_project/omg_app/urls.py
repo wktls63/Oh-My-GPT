@@ -9,7 +9,10 @@ urlpatterns = [
     path('loading/', views.loading, name='loading'),
     path('payment/', views.payment, name='payment'),
     path('intro/', views.intro, name='intro'),
+    path('login/', views.login, name='login'),
+    path('center_write/', views.center_write, name='center_write'),
 ]
+
 
 # user_views.py
 urlpatterns += [

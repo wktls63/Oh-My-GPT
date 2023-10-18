@@ -18,3 +18,9 @@ def payment(request):
 
 def intro(request):
     return render(request, 'intro.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def center_write(request):
+    return render(request, 'center-write.html')
