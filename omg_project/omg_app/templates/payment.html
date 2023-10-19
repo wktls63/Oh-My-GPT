@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{% static 'css/reset.css' %}?{% now "U" %}">
     <link rel="stylesheet" href="{% static 'css/payment.css' %}?{% now "U" %}">
     <link rel="stylesheet" href="{% static 'css/nav.css' %}?{% now "U" %}">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="{% static 'js/payment_call.js' %}"></script>
     <title>요금 안내</title>
 </head>
 <body>
@@ -22,21 +25,21 @@
                     <h1>OMG Pro</h1>
                     <p>$9.9 / 월</p>
                 </div>
-                <button class="pay-button">결제하기</button>
+                <button class="pay-button" value="6" id="order">결제하기</button>
             </div>
             <div class="tier">
                 <div>
                     <h1>OMG Pro+</h1>
                     <p>$49.9 / 월</p>
                 </div>
-                <button class="pay-button">결제하기</button>
+                <button class="pay-button" value="7">결제하기</button>
             </div>
             <div class="tier">
                 <div>
                     <h1>OMG Ent</h1>
                     <p>$99.9 / 월</p>
                 </div>
-                <button class="pay-button">결제하기</button>
+                <button class="pay-button" value="8">결제하기</button>
             </div>
         </div>
     </div>
