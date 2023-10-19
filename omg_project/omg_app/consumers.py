@@ -48,5 +48,3 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "send_date": send_date,
             "sender": sender  # username도 함께 전송
         }))
-        
-        
