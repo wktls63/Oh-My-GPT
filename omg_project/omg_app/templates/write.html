@@ -22,7 +22,7 @@
             <p class="title">원하는 데이터를 넣어서<br>나만의 GPT를 만드세요.</p>
             <p class="sub-title">API 주소를 입력하거나 CSV 형식에 데이터를 입력하여 맞춤형 GPT를 만들 수 있습니다.</p>
         </div>
-        <form action="{% url 'loading' %}" method="POST" class="write-form-container">
+        <form action="{% url 'model:upload_model' %}" method="POST" class="write-form-container" enctype="multipart/form-data">
             {% csrf_token %}
             <div style="width:90%;">
                 <input id="gpt-name" name="gptName" type="text" placeholder="GPT 이름">
@@ -36,7 +36,7 @@
                 <label for="file">
                     <div class="select-data">데이터 선택하기</div>
                 </label>
-                <input style="display:none;" id="file" type="file" name="file">
+                <input style="display:none;" id="file" type="file" name="file_dir">
             </div>
             <div style="width:90%">
                 <input id="form-submit" type="submit" value="나만의 GPT 생성하기 +">
