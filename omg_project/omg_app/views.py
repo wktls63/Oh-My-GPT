@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -13,9 +14,6 @@ def write(request):
 def loading(request):
     return render(request, 'loading.html')
 
-def payment(request):
-    return render(request, 'payment.html')
-
 def intro(request):
     return render(request, 'intro.html')
 
@@ -27,3 +25,6 @@ def center_write(request):
 
 def center(request):
     return render(request, 'center.html')
+
+def payment(request):
+    return render(request, 'payment.html')
