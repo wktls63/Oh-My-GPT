@@ -33,9 +33,10 @@
                 <input class="data-type2" name="dataType2" type="button" value="원하는 데이터 학습">
             </div>
             <div style="width:90%">
-                <select id="select-data">
-                    <option>공공데이터 선택하기</option>
-                </select>
+                <label for="file">
+                    <div class="select-data">데이터 선택하기</div>
+                </label>
+                <input style="display:none;" id="file" type="file" name="file">
             </div>
             <div style="width:90%">
                 <input id="form-submit" type="submit" value="나만의 GPT 생성하기 +">
