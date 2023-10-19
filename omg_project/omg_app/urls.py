@@ -1,6 +1,16 @@
 from . import views
 from django.urls import path, include
+
+from .views import SubScriptionAPIViewp
+
 from .omg_app_urls.chat_urls import urlpatterns as chat_urlpatterns
+
+api_patterns = [
+
+    # api url
+    path('subscription', SubScriptionAPIViewp.as_view()),
+]
+
 
 
 urlpatterns = [
@@ -13,6 +23,9 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('center_write/', views.center_write, name='center_write'),
     path('center/', views.center, name='center'),
+
+    # api
+    path('api/', include(api_patterns)),
 ]
 
 
@@ -21,7 +34,9 @@ urlpatterns += [
     
 ]
 
+
 # chat_views.py
 urlpatterns += [
     path('chat/', include((chat_urlpatterns, 'chat')))
 ]
+
