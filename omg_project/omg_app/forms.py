@@ -10,3 +10,14 @@ class SignUpForm(UserCreationForm):
 class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
+from .models import AIModel, Data
+
+class AIModelForm(forms.ModelForm):
+    class Meta:
+        model = AIModel
+        fields = '__all__'
+        
+class DataForm(forms.ModelForm):
+    class Meta:
+        model = Data
+        fields = '__all__'

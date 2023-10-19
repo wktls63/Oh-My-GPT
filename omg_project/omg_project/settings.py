@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 # CORS 처리
 CORS_ORIGIN_ALLOW_ALL = True
 
+
 # 채팅 관련 추가
 ASGI_APPLICATION = "omg_project.asgi.application"
 
