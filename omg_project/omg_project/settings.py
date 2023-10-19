@@ -36,6 +36,7 @@ AUTH_USER_MODEL = 'omg_app.User'
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",  # 채팅 관련 추가
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'omg_app',
 ]
+
+# 채팅 관련 추가
+ASGI_APPLICATION = "omg_project.asgi.application"
+
+# 채팅 관련 추가
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
