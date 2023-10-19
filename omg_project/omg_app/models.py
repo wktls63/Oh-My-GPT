@@ -147,7 +147,7 @@ class ChatRoom(models.Model):
         verbose_name_plural     = '채팅방 목록'
 
 
-class Messsage(models.Model):
+class Message(models.Model):
     """
     채팅 메세지에 대한 모델
     """
@@ -167,8 +167,21 @@ class Messsage(models.Model):
         verbose_name_plural     = '채팅 메세지 목록'
 
 
+class SubscriptionProduct(models.Model):
+    item_name                           = models.CharField(verbose_name = "상품명")
+    amount                              = models.IntegerField(verbose_name = "상품 가격", default = 0)
+
+    def str(self):
+        return f"{self.item_name}"
+
+    class Meta:
+        verbose_name            = '상품'
+        verbose_name_plural     = '상품 목록'
+
+
 class Payment(models.Model):
     user_id                             = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
+    subscription_product_id              = models.ForeignKey(SubscriptionProduct, verbose_name = "상품ID", on_delete = models.CASCADE, default="")
     merchant_id                         = models.UUIDField(verbose_name = "가맹점 코드", default = uuid.uuid4, editable = False)
     amount                              = models.PositiveIntegerField(verbose_name='결제 금액', default=100)
     payment_date                        = models.DateTimeField(verbose_name = "결제 갱신일", auto_now_add = True)

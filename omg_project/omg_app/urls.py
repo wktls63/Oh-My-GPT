@@ -1,6 +1,7 @@
 from . import views
-from django.urls import path
-# from .views import 
+from django.urls import path, include
+from .omg_app_urls.chat_urls import urlpatterns as chat_urlpatterns
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -18,4 +19,9 @@ urlpatterns = [
 # user_views.py
 urlpatterns += [
     
+]
+
+# chat_views.py
+urlpatterns += [
+    path('chat/', include((chat_urlpatterns, 'chat')))
 ]
