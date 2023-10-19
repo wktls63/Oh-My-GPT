@@ -1,6 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts           import render
+from rest_framework             import status
+from rest_framework.views       import APIView
+from rest_framework.response    import Response
+from .models                    import SubscriptionProduct
+from .serializers               import SubscriptionSerializer
 
-# Create your views here.
+
+# API View
+class SubScriptionAPIViewp(APIView):
+    """
+    구독 서비스 상품 목록 API
+    """
+
+    def get(self, request, **kwards):
+
+        queryset   = SubscriptionProduct.objects.all()
+        serializer = SubscriptionSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 def index(request):
     return render(request, 'index.html')
 
@@ -13,9 +32,6 @@ def write(request):
 def loading(request):
     return render(request, 'loading.html')
 
-def payment(request):
-    return render(request, 'payment.html')
-
 def intro(request):
     return render(request, 'intro.html')
 
@@ -27,3 +43,6 @@ def center_write(request):
 
 def center(request):
     return render(request, 'center.html')
+
+def payment(request):
+    return render(request, 'payment.html')
