@@ -2,6 +2,8 @@ from . import views
 from django.urls import path, include
 
 from .views import SubScriptionAPIView, PaymentValidationView
+from .omg_app_views.user_views import RegisterAPIView, AuthView, UserInfoAPIView
+
 
 from .omg_app_urls.chat_urls import urlpatterns as chat_urlpatterns
 from .omg_app_urls.user_urls import urlpatterns as user_urlpatterns
@@ -12,6 +14,9 @@ api_patterns = [
     # api url
     path('subscription', SubScriptionAPIView.as_view()),
     path('validation', PaymentValidationView.as_view()),
+    path("register", RegisterAPIView.as_view()),
+    path("auth", AuthView.as_view()),
+    path('userinfo', UserInfoAPIView.as_view()),
 
 ]
 
@@ -20,7 +25,6 @@ api_patterns = [
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('chat/', views.chat, name='chat'),
     path('write/', views.write, name='write'),
     path('loading/', views.loading, name='loading'),
     path('payment/', views.payment, name='payment'),
@@ -36,13 +40,13 @@ urlpatterns = [
 
 # user_views.py
 urlpatterns += [
-    path('login/', include((user_urlpatterns))),
+    path('user/', include((user_urlpatterns))),
 ]
 
 
 # chat_views.py
 urlpatterns += [
-    path('chat/', include((chat_urlpatterns, 'chat')))
+    path('chat/', include((chat_urlpatterns)))
 ]
 
 # model_views.py
