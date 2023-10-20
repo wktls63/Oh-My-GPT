@@ -23,7 +23,7 @@
             <!-- 채팅 리스트 -->
             <div class="chat-list-box">
                 <!-- 봇 -->
-                <div class="chat-box">
+                <div class="chat-box" onclick="initChat(1)"> 
                 <div class="ai-profile">
                     <img src="{% static 'img/ai-icon.svg' %}" alt="">
                 </div>
@@ -46,35 +46,164 @@
             </div>
 
             <!-- 채팅창 -->
-            <div class="chat-main-container">
-            <div>
-                <div class="contact-info">
-                    <a>나만의 GPT</a>
-                </div>
-
-                <!-- 채팅창 메인 -->
-                <div class="chat-container">
-                <div class="message-box from-me">
-                    <p class="read-check">&bull;</p>
-                    <div class="message-text">오늘 날씨 어때?</div>
-                </div>
-                <div class="message-box from-you">
-                    <div class="message-text">오늘 날씨는 비가 오고 추워 그러고 나가면 얼어죽어</div>
-                    <p class="read-check">&bull;</p>
-                </div>
-                </div>
-            </div>
-
-            <form action="submit" method="POST" class="chat-input">
-                <input placeholder="메세지를 입력해주세요"></input>
-                <button>
-                    <img src="{% static 'img/send.svg' %}" alt="">
-                </button>
-            </form>
-            </div>
+            <div class="chat-main-container"></div>
         </div>
         </div>
     </div>
 
 </body>
+<script>
+    let chatSocekt = null;
+    const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정
+    const USER_ID = '1' ; // TODO: USER_ID 동적으로 변경
+    let currChatId = 1; // TODO: currChatId 동적으로 변경
+    
+    async function initChat(chatId) {
+        currChatId = chatId;
+        await initNewWebSocket(chatId);
+        makeNewChatDisplayAndGetPastMessages(chatId);
+    }
+
+    async function initNewWebSocket(chatId){
+        chatSocket = await new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + chatId
+            + '/'
+        );
+        
+        // 소켓 연결시 호출
+        chatSocket.onopen = function(e) {
+            console.log(`chat socket ${chatId} connected`); 
+        }
+
+        // 소켓에서 메시지가 오면 호출
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chatContainer = document.querySelector('.chat-container');
+            
+            let html = '';
+            if (data.sender == USER_ID) { 
+                html = getFromMeHtml(data.message); 
+            } else { 
+                html = getFromYouHtml(data.message); 
+            }
+            chatContainer.insertAdjacentHTML('beforeend', html);
+            moveScrollToBottom();
+        }
+
+        // 소켓 종료시 호출
+        chatSocket.onclose = function (e) {
+            console.log('chat socket closed');
+        };
+    }
+
+    // 스크롤을 최하단으로 내려주는 함수
+    function moveScrollToBottom() {
+        const chatContainer = document.querySelector('.chat-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function makeNewChatDisplayAndGetPastMessages(chatId) {
+        NewChatDisplayResolver();
+        PastMessagesResolver(chatId);
+    }
+    
+    // 새로운 채팅창을 만들어주는 함수
+    function NewChatDisplayResolver() {
+        const chatMainContainer = document.querySelector('.chat-main-container');
+        
+        const outterDiv = document.createElement('div');
+        chatMainContainer.appendChild(outterDiv);
+
+        const contactInfo = document.createElement('div');
+        contactInfo.classList.add('contact-info');
+        
+        const a = document.createElement('a');
+        a.innerText = '나만의 GPT'; // TODO: GPT 이름 동적으로 바꾸기
+        contactInfo.appendChild(a);
+        outterDiv.appendChild(contactInfo);
+
+        const chatContainer = document.createElement('div');
+        chatContainer.classList.add('chat-container');
+        outterDiv.appendChild(chatContainer);
+
+        const form = document.createElement('form');
+        form.classList.add('chat-input');
+        
+        const input = document.createElement('input');
+        input.classList.add('chat-textarea');
+        input.placeholder = '메세지를 입력해주세요';
+        form.appendChild(input);
+
+        const button = document.createElement('button');
+        button.setAttribute('onclick', 'sendMessage(event)');
+        const img = document.createElement('img');
+        img.src = "{% static 'img/send.svg' %}";
+        button.appendChild(img);
+        form.appendChild(button);
+
+        chatMainContainer.appendChild(form);
+    }
+
+     // 이전의 메시지를 불러오는 함수
+     async function PastMessagesResolver(chatId) {
+        const response = await fetch(MESSAGE_URI + chatId, {
+            method: 'GET',
+            headers: {'X-CSRFToken': "{{csrf_token}}"}
+          }
+        );
+        const result = await response.json();
+        drawMessageResolver(result);
+    }
+
+    function drawMessageResolver(result) {
+        const chatContainer = document.querySelector('.chat-container');
+        chatContainer.innerHTML = '';
+        let html = '';
+        for (let item of result) {
+            if((item.sender_id !== null) && (item.sender_id == userId)) {
+                html += getFromMeHtml(itme.text);
+            } else {
+                html += getFromYouHtml(item.text);
+            }
+        }
+        chatContainer.insertAdjacentHTML('beforeend', html);
+    }
+
+    function getFromYouHtml(message) {
+        return `
+        <div class="message-box from-you">
+            <div class="message-text">${message}</div>
+            <p class="read-check">&bull;</p>
+        </div>
+        `;
+    }
+
+    function  getFromMeHtml(message) {
+        return `
+        <div class="message-box from-me">
+            <p class="read-check">&bull;</p>
+            <div class="message-text">${message}</div>
+        </div>
+        `;
+    }
+
+    // 사용자의 메시지를 전송하는 함수
+    function sendMessage() {
+        event.preventDefault(); // 기본 이벤트 동작을 중단
+
+        const messageInputDom = document.querySelector('.chat-textarea');
+        const message = messageInputDom.value;
+        console.log(message);
+        chatSocket.send(JSON.stringify({
+          'type': 'chat_message',
+          'sender': USER_ID,
+          'message': message
+        }));
+        messageInputDom.value = '';
+    }
+
+</script>
 </html>
