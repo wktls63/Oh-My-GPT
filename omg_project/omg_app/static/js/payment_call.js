@@ -13,7 +13,6 @@ const subscriptionList = await getSubscriptionList();
 const GPTPro = subscriptionList[0]
 const GPTProPlust = subscriptionList[1]
 const GPTEnterPrise = subscriptionList[2]
-console.log(GPTEnterPrise.id)
 
 // 주문번호
 var merchantt = new Date().getTime();

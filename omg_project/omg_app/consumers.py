@@ -1,5 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from .models import ChatRoom, Message, User, AIModel
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -19,12 +20,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         print(text_data_json)
         
-        
         chat_id = self.scope["url_route"]["kwargs"]["chat_id"]
         message = text_data_json["message"] # 메시지 내용 추출
         sender = text_data_json["sender"]  # 보내는 사람 추출
-        # chat = Chat.objects.get(id=chat_id)
-        # sender = User.objects.get(id=sender)
+        
+        chat_room = ChatRoom.objects.get(id=chat_id)
+        chat_room.last_message = message
+        
+        # if User.objects.get(id=sender)
+        
+        # chat_room.save()
+        
         
         # Send message to room group
         await self.channel_layer.group_send(
