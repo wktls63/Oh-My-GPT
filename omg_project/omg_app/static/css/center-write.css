@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 .content {
@@ -15,9 +14,8 @@
 }
 
 .inner {
-    width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
 
 .big-title {
@@ -27,4 +25,13 @@
     font-weight: 700;
     margin-bottom: 60px;
     color: #1a2e35;
+}
+
+iframe {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+iframe::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
