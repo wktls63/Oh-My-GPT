@@ -4,6 +4,7 @@ from django.urls import path, include
 from .views import SubScriptionAPIView, PaymentValidationView
 from .omg_app_views.user_views import RegisterAPIView, AuthView, UserInfoAPIView
 
+
 from .omg_app_urls.chat_urls import urlpatterns as chat_urlpatterns
 from .omg_app_urls.user_urls import urlpatterns as user_urlpatterns
 from .omg_app_urls.model_urls import urlpatterns as model_urlpatterns
@@ -16,6 +17,7 @@ api_patterns = [
     path("register", RegisterAPIView.as_view()),
     path("auth", AuthView.as_view()),
     path('userinfo', UserInfoAPIView.as_view()),
+
 ]
 
 

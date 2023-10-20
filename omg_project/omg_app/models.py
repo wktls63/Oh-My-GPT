@@ -182,7 +182,7 @@ class SubscriptionProduct(models.Model):
 
 class Payment(models.Model):
     user_id                             = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
-    subscription_product_id              = models.ForeignKey(SubscriptionProduct, verbose_name = "상품ID", on_delete = models.CASCADE, default="")
+    subscription_product_id             = models.ForeignKey(SubscriptionProduct, verbose_name = "상품ID", on_delete = models.CASCADE, default="")
     merchant_id                         = models.UUIDField(verbose_name = "가맹점 코드", default = uuid.uuid4, editable = False)
     amount                              = models.PositiveIntegerField(verbose_name='결제 금액', default=100)
     payment_date                        = models.DateTimeField(verbose_name = "결제 갱신일", auto_now_add = True)
