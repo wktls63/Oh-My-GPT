@@ -14,85 +14,12 @@
     {% include 'nav.html' %}
 
     <div class="content">
+        <h3 class="big-title">
+            문의하기
+        </h3>
         <div class="inner">
-            <h3 class="big-title">
-                문의하기
-            </h3>
-
-            <div class="board-list">
-                <p class="title">문의 사항</p>
-                <form method="POST" action="
-                    {% comment %} {% if cs_item %}
-                    {% url 'edit' cs_item.id %}
-                    {% else %}
-                    {% url 'create_cs' %}
-                    {% endif %} {% endcomment %}
-                    " enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" name="csForm" value="">
-                    <table class="write-table">
-                        <tbody>
-                            <tr>
-                                <th>제목</th>
-                                <td colspan="3">
-                                    <input type="text" name="title" class="board" placeholder="최대 100자까지 입력 가능합니다." required value="{% if cs_item %}{{ cs_item.title }}{% endif %}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>내용</th>
-                                <td colspan="3">
-                                    <textarea name="content" required>{% if cs_item %}{{ cs_item.content }}{% endif %}</textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="submit-button">
-                        {% if cs_item %}
-                        <button type="submit" class="input-btn">수정하기</button>
-
-                        <!-- 삭제버튼과 모달 -->
-                        <button id="del-btn" class="input-btn">삭제하기</button>
-
-                        <!-- 삭제 모달 -->
-                        <div class="black-bg noshow">
-                            <div class="white-bg">
-                            <div>문의사항을 삭제하시겠습니까?</div>
-                            <div class="modal-btn">
-                                <form method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="delete">
-                                <button type="submit" class="input-btn">삭제하기</button>
-                                </form>
-                                <button id="close" class="input-btn">아니요</button>
-                            </div>
-                            </div>
-                        </div>
-                        {% else %}
-                        <button class="input-btn" onclick="history.back()">취소하기</button>
-                        <button type="submit" class="input-btn">등록하기</button>
-                        {% endif %}
-                    </div>
-                </form>
-            </div>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScohIPEPnSmCFzcjmP6QoTFDrZOJ0ZhfRuRxfRGdap8CaHHwQ/viewform?embedded=true" width="640" height="1140" scrolling="no" frameborder="0" marginheight="0" marginwidth="0">로드 중…</iframe>
         </div>
     </div>
 </body>
-<script>
-    document.querySelector('#del-btn').addEventListener('click',function(){
-      document.querySelector('.black-bg').classList.remove('noshow');
-      document.querySelector('.black-bg').classList.add('modal-open');
-    })
-
-    document.querySelector('#close').addEventListener('click',function(){
-      document.querySelector('.black-bg').classList.add('noshow');
-    })
-    
-    document.querySelector('.black-bg').addEventListener("click", function(e){
-      const evTarget = e.target
-      if(evTarget.classList.contains("modal-open")) {
-        document.querySelector('.black-bg').classList.add('noshow');
-      }
-  })
-  </script>
 </html>

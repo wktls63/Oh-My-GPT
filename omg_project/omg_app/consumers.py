@@ -24,21 +24,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json["message"] # 메시지 내용 추출
         sender = text_data_json["sender"]  # 보내는 사람 추출
         
+        # 마지막 메시지 업데이트
         chat_room = ChatRoom.objects.get(id=chat_id)
         chat_room.last_message = message
+        chat_room.save()
         
-        # if User.objects.get(id=sender)
+        # 유저가 보낸 메시지일 경우
+        if User.objects.filter(id=sender).exists():
+            message_obj = Message.objects.create(chat_id=chat_room, sender_id=User.objects.get(id=sender), content=message)
+        # 모델이 보낸 메시지일 경우
+        else:
+            message_obj = Message.objects.create(chat_id=chat_room, content=message)
         
-        # chat_room.save()
-        
-        
-        # Send message to room group
+        # 메시지를 채팅방 그룹에 전송
         await self.channel_layer.group_send(
             self.room_group_name, {
                 "type": "chat_message",
                 "message": message,
                 "send_date": "2023-10-19",
-                "sender": sender,  # username을 함께 전송
+                "sender": sender,  
             }
         )
     
