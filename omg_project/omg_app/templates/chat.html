@@ -23,25 +23,17 @@
             <!-- 채팅 리스트 -->
             <div class="chat-list-box">
                 <!-- 봇 -->
-                <div class="chat-box" onclick="initChat(1)"> 
+                {% for item in chat_list %}
+                <div class="chat-box" onclick="initChat({{ item.id }})"> 
                 <div class="ai-profile">
-                    <img src="{% static 'img/ai-icon.svg' %}" alt="">
+                    <img src="{% static 'img/ai-icon.svg' %}" alt=""> <!-- TODO: AI 프로필 이미지 -->
                 </div>
                 <div>
-                    <p class="bold">업무용 GPT</p>
-                    <p class="chat-thumb-text">마지막 메시지</p>
+                    <p class="bold">{{item.model_id.model_name}}</p>
+                    <p class="chat-thumb-text">{{item.last_message}}</p>
                 </div>
                 </div>
-
-                <div class="chat-box">
-                <div class="ai-profile">
-                    <img src="{% static 'img/ai-icon.svg' %}" alt="">
-                </div>
-                <div>
-                    <p class="bold">나만의 GPT</p>
-                    <p class="chat-thumb-text">마지막 메시지</p>
-                </div>
-                </div>
+                {% endfor %}
             </div>
             </div>
 
@@ -55,8 +47,8 @@
 <script>
     let chatSocekt = null;
     const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정
-    const USER_ID = '1' ; // TODO: USER_ID 동적으로 변경
-    let currChatId = 1; // TODO: currChatId 동적으로 변경
+    const USER_ID = '2' ; // TODO: USER_ID 동적으로 변경
+    let currChatId = '1'; // TODO: currChatId 동적으로 변경
     
     async function initChat(chatId) {
         currChatId = chatId;
@@ -107,12 +99,13 @@
 
     function makeNewChatDisplayAndGetPastMessages(chatId) {
         NewChatDisplayResolver();
-        PastMessagesResolver(chatId);
+        pastMessagesResolver(chatId);
     }
     
     // 새로운 채팅창을 만들어주는 함수
     function NewChatDisplayResolver() {
         const chatMainContainer = document.querySelector('.chat-main-container');
+        chatMainContainer.innerHTML = '';
         
         const outterDiv = document.createElement('div');
         chatMainContainer.appendChild(outterDiv);
@@ -148,7 +141,7 @@
     }
 
      // 이전의 메시지를 불러오는 함수
-     async function PastMessagesResolver(chatId) {
+     async function pastMessagesResolver(chatId) {
         const response = await fetch(MESSAGE_URI + chatId, {
             method: 'GET',
             headers: {'X-CSRFToken': "{{csrf_token}}"}
@@ -163,10 +156,10 @@
         chatContainer.innerHTML = '';
         let html = '';
         for (let item of result) {
-            if((item.sender_id !== null) && (item.sender_id == userId)) {
-                html += getFromMeHtml(itme.text);
+            if((item.sender_id_id !== null) && (item.sender_id_id == USER_ID)) {
+                html += getFromMeHtml(item.content);
             } else {
-                html += getFromYouHtml(item.text);
+                html += getFromYouHtml(item.content);
             }
         }
         chatContainer.insertAdjacentHTML('beforeend', html);
