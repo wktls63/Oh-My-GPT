@@ -46,9 +46,3 @@ urlpatterns += [
 urlpatterns += [
     path('model/', include((model_urlpatterns, 'model')))
 ]
-
-
-# model_views.py
-urlpatterns += [
-    path('model/', include((model_urlpatterns, 'model')))
-]
