@@ -28,7 +28,7 @@ SECRET_KEY = secret['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # USER
 AUTH_USER_MODEL = 'omg_app.User'
@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders', # CORS 관련 추가
     'rest_framework',
     'rest_framework_simplejwt',
-    'corsheaders', # CORS 관련 추가
     'omg_app',
 ]
 
@@ -113,6 +113,7 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # CORS 관련 추가
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,7 +121,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # CORS 관련 추가
 ]
 
 ROOT_URLCONF = 'omg_project.urls'
@@ -200,3 +200,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 비동기 async 함수에서 ORM 조회 설정
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
