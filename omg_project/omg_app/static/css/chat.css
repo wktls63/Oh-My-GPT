@@ -110,12 +110,15 @@ body {
 
 .chat-container {
     padding: 14px 20px;
-    max-height: 264px;
+    max-height: 425px;
     overflow-y: auto;
     overflow-x: hidden;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.chat-container::-webkit-scrollbar {
+    display: none;
 }
 
 .message-box {
