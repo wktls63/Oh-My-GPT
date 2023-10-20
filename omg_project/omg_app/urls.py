@@ -4,6 +4,7 @@ from django.urls import path, include
 from .views import SubScriptionAPIViewp
 
 from .omg_app_urls.chat_urls import urlpatterns as chat_urlpatterns
+from .omg_app_urls.user_urls import urlpatterns as user_urlpatterns
 from .omg_app_urls.model_urls import urlpatterns as model_urlpatterns
 
 api_patterns = [
@@ -11,6 +12,7 @@ api_patterns = [
     # api url
     path('subscription', SubScriptionAPIViewp.as_view()),
 ]
+
 
 
 
@@ -32,7 +34,7 @@ urlpatterns = [
 
 # user_views.py
 urlpatterns += [
-    
+    path('login/', include((user_urlpatterns))),
 ]
 
 
@@ -40,7 +42,6 @@ urlpatterns += [
 urlpatterns += [
     path('chat/', include((chat_urlpatterns, 'chat')))
 ]
-
 
 # model_views.py
 urlpatterns += [
