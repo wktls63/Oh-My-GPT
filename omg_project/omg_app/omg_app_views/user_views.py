@@ -21,19 +21,8 @@ import jwt
 
 ''' 기능 관련 '''
 
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(email=email, password=password)
-        if user:
-            auth_login(request, user)
-            return JsonResponse({'message': '로그인 되었습니다.'})
-        else:
-            return JsonResponse({'error': 'Invalid credentials'}, status=400)
-    else:
-        form = LoginForm()
+def user_login(request):    
+    form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
 
@@ -141,7 +130,7 @@ class AuthView(APIView):
 
     def post(self, request):
         user = authenticate(
-            name = request.data.get("email"), password = request.data.get("password")
+           username = request.data.get("email"), password = request.data.get("password")
         )
         if user is not None:
             serializer = UserSerializer(user)

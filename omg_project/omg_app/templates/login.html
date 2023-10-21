@@ -13,24 +13,24 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="/signup/" method="POST">
+            {% comment %} <form action="/api/register" method="POST"> {% endcomment %}
+            <form method="POST">
                 {% csrf_token %}
                 <h1>Create Account</h1>
-                <input type="hidden" name="signIn">
-                <input type="email" id="sign-in-email" placeholder="Email" name="email" required>
-                <input type="password" id="sign-in-password" placeholder="Password" name="password" required>
-                <button type="submit">Sign Up</button>
+                <input type="email" id="sign-up-email" placeholder="Email" name="email" required>
+                <input type="password" id="sign-up-password" placeholder="Password" name="password" required>
+                <button type="submit" id="sign-up-btn">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="/login/" method="POST">
+            {% comment %} <form action="/user/login/" method="POST"> {% endcomment %}
+            <form method="POST">
                 {% csrf_token %}
                 <h1>Sign in</h1>
-                <input type="hidden" name="signUp">
-                <input type="email" id="sign-up-email" placeholder="Email" name="email" required>
-                <input type="password" id="sign-up-password" placeholder="Password" name="password" required>
+                <input type="email" id="sign-in-email" placeholder="Email" name="email" required>
+                <input type="password" id="sign-in-password" placeholder="Password" name="password" required>
                 <a href="#">Forgot your password?</a>
-                <button type="submit">Sign In</button>
+                <button id="sign-in-btn">Sign In</button>
             </form>
         </div>
         <div class="overlay-container">
