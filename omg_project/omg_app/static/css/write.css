@@ -1,43 +1,83 @@
-html,body{
+html,body {
     width: 100%;
     height: 100%;
+    font-family: 'Pretendard', sans-serif;
 }
-.write-container{
+
+.write-container {
     display: flex; 
     width: 100%; 
     height: 100%;
 }
-.description{
+
+.description {
     display: flex; 
     flex-direction: column; 
     justify-content: center; 
-    gap:20px; 
+    gap: 20px; 
     width: 40%;
-    padding-left: 2em;
+    margin: 55px;
 }
-.title{
-    font-size: 3em; 
-    color:#091B22;
+
+.description p {
+    z-index: 2;
+}
+
+.title {
+    position: relative;
+    font-size: 3em;
+    color: #091B22;
     font-weight: 700;
     line-height: normal;
 }
-.sub-title{
+
+.title:after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 240px;
+    height: 12px;
+    background: rgb(168, 255, 255, .7);
+    border-radius: 50px;
+    z-index: -1;
+}
+
+.sub-title {
     font-size: 1.5em; 
     font-weight: 500;
     line-height: normal;
     color: #C3C3C3;
 }
-.write-form-container{
+
+.write-form-container {
     width: 60%; 
     display:flex;
     justify-content: center;
-    flex-direction:column;
-    gap:3em;
-    align-items:center;
+    flex-direction: column;
+    gap: 5em;
+    align-items: center;
 }
-.write-form-container>img{width: 100%;}
-#gpt-name{
-    width: 36rem;
+
+.write-form-container>img {
+    width: 100%;
+}
+
+.gpt-input-detail {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.gpt-name-input {
+    width: 90%;
+    display: flex;
+}
+
+#gpt-name {
+    width: 50%;
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 1.5rem;
@@ -45,8 +85,14 @@ html,body{
     font-size: 2rem;
     line-height: normal;
     font-weight: 400;
+    padding-left: 20px;
 }
-.data-type1{
+
+.gpt-name-input input {
+    padding-left: 20px;
+}
+
+.data-type1 {
     width: 36rem;
     border: none;
     border-radius: 1.5rem 0rem 0rem 1.5rem;
@@ -55,7 +101,8 @@ html,body{
     font-size: 2rem;
     padding: 1rem;
 } 
-.data-type2{
+
+.data-type2 {
     width: 36rem;
     border: none;
     border-radius: 0rem 1.5rem 1.5rem 0rem;
@@ -64,7 +111,9 @@ html,body{
     font-size: 2rem;
     padding: 1rem;
 }
-.data-type1:hover, .data-type2:hover{
+
+.data-type1:hover,
+.data-type2:hover {
     border: 0 solid;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
     outline: 1px solid rgba(255, 255, 255, 0.5);
@@ -75,12 +124,12 @@ html,body{
     text-shadow: 1px 1px 2px #427388;
 }
 
-.type-select{
-    background-color:#383838;
+.type-select {
+    background-color: #383838;
     color: white;
 }
 
-.select-data{
+.select-data {
     background-color: white;
     width: 100%;
     border: none;
@@ -91,8 +140,10 @@ html,body{
     padding: 1rem;
     cursor: pointer;
     text-align: center;
+    line-height: normal;
 }
-.select-data:hover{
+
+.select-data:hover {
     border: 0 solid;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
     outline: 1px solid rgba(255, 255, 255, 0.5);
@@ -103,9 +154,9 @@ html,body{
     text-shadow: 1px 1px 2px #427388;
 }
 
-#form-submit{
-    background-color:#A8FFFF;
-    width: 100%;
+#form-submit {
+    background-color: #A8FFFF;
+    width: 90%;
     padding: 1rem;
     font-size: 2rem;
     border: none;
@@ -116,7 +167,13 @@ html,body{
     line-height: normal;
 }
 
-#form-submit:hover{
+.form-submit-btn {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+#form-submit:hover {
     border: 0 solid;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
     outline: 1px solid rgba(255, 255, 255, 0.5);
