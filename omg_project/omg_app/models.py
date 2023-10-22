@@ -101,24 +101,12 @@ class Posting(models.Model):
         verbose_name_plural     = '포스팅 목록'
 
 
-class Data(models.Model):
-    file_dir                            = models.TextField(verbose_name = "데이터 경로")
-
-    def __str__(self):
-        return f"{self.file_dir}"
-
-    class Meta:
-        verbose_name            = '데이터 경로'
-        verbose_name_plural     = '데이터 경로 목록'
-
-
 class AIModel(models.Model):
     """
-    AI모델에 대한 모델 
+    AI모델에 대한 모델
     """
     model_id                            = models.UUIDField(primary_key=True, verbose_name = "모델 id", default = uuid.uuid4, editable = False)
     user_id                             = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
-    data_id                             = models.ForeignKey(Data, verbose_name = "모델 데이터 id", on_delete = models.CASCADE)
     model_name                          = models.CharField(verbose_name = "모델 이름", max_length = 50)
     create_date                         = models.DateTimeField(verbose_name = "생성일", null = True)
 
