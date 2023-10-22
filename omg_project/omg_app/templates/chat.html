@@ -47,8 +47,8 @@
 <script>
     let chatSocekt = null;
     const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정
-    const USER_ID = '2' ; // TODO: USER_ID 동적으로 변경
-    let currChatId = '1'; // TODO: currChatId 동적으로 변경
+    const USER_ID =  ; // TODO: USER_ID 동적으로 변경
+    let currChatId = '0'; 
     
     async function initChat(chatId) {
         currChatId = chatId;
@@ -56,13 +56,18 @@
         makeNewChatDisplayAndGetPastMessages(chatId);
     }
 
+    function getJWTToken() {
+        return localStorage.getItem("access");
+    }
+
     async function initNewWebSocket(chatId){
+        const jwtToken = getJWTToken();
         chatSocket = await new WebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/'
             + chatId
-            + '/'
+            + '/?token=' + jwtToken
         );
         
         // 소켓 연결시 호출
