@@ -2,6 +2,21 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import ChatRoom, Message, User, AIModel
 
+import jwt
+from pathlib import Path
+import json
+import os
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRETS_DIR = BASE_DIR / '.secrets'
+secret = json.load(open(os.path.join(SECRETS_DIR, 'secret.json')))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = secret['DJANGO_SECRET_KEY']
+
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         print('connect 진입')
@@ -22,7 +37,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         chat_id = self.scope["url_route"]["kwargs"]["chat_id"]
         message = text_data_json["message"] # 메시지 내용 추출
-        sender = text_data_json["sender"]  # 보내는 사람 추출
+        
+        # JWT 토큰에서 사용자 가져오기
+        access_token = self.scope.get('cookies', {}).get('access', None)
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.filter(id=payload['user_id']).first()
+        
+        print(user)
+        if user is None:
+            # 인증 실패시 연결 종료
+            return await self.close()       
+        
+        sender = user.id
         
         # 마지막 메시지 업데이트
         chat_room = ChatRoom.objects.get(id=chat_id)
