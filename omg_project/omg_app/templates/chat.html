@@ -46,10 +46,10 @@
 </body>
 <script>
     let chatSocekt = null;
-    const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정
-    const USER_ID = -1; // TODO: USER_ID 동적으로 변경
+    const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정\
+
     let currChatId = '0'; 
-    
+
     async function initChat(chatId) {
         currChatId = chatId;
         await initNewWebSocket(chatId);
@@ -81,7 +81,7 @@
             const chatContainer = document.querySelector('.chat-container');
             
             let html = '';
-            if (data.sender == USER_ID) { 
+            if (data.sender == 'user') { 
                 html = getFromMeHtml(data.message); 
             } else { 
                 html = getFromYouHtml(data.message); 
@@ -103,12 +103,12 @@
     }
 
     function makeNewChatDisplayAndGetPastMessages(chatId) {
-        NewChatDisplayResolver();
+        newChatDisplayResolver();
         pastMessagesResolver(chatId);
     }
     
     // 새로운 채팅창을 만들어주는 함수
-    function NewChatDisplayResolver() {
+    function newChatDisplayResolver() {
         const chatMainContainer = document.querySelector('.chat-main-container');
         chatMainContainer.innerHTML = '';
         
@@ -161,7 +161,7 @@
         chatContainer.innerHTML = '';
         let html = '';
         for (let item of result) {
-            if((item.sender_id_id !== null) && (item.sender_id_id == USER_ID)) {
+            if (item.is_user == true) {
                 html += getFromMeHtml(item.content);
             } else {
                 html += getFromYouHtml(item.content);
@@ -197,8 +197,8 @@
         console.log(message);
         chatSocket.send(JSON.stringify({
           'type': 'chat_message',
-          'sender': USER_ID,
-          'message': message
+          'message': message,
+          'from' : 'user'
         }));
         messageInputDom.value = '';
     }
