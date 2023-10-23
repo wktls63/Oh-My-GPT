@@ -108,7 +108,7 @@
     </td>
     <td align="center">
       <a>
-        <b>이준형</b>
+        <b>김유진</b>
       </a>
     </td>
   </tr>
