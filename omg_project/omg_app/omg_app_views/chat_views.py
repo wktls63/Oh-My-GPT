@@ -38,7 +38,8 @@ def chat(request):
     print(chat_list)
     
     context = {
-        'chat_list': chat_list
+        'chat_list': chat_list,
+        'user_id' : user.id
     }
     
     return render(request, 'chat.html', context)
