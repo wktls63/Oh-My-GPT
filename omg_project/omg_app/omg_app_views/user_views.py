@@ -2,7 +2,7 @@ from django.shortcuts                       import render
 from django.contrib.auth                    import authenticate, login as auth_login, logout as auth_logout
 from django.core.mail                       import send_mail
 from django.http                            import JsonResponse
-from rest_framework_simplejwt.tokens        import RefreshToken
+from rest_framework_simplejwt.tokens        import RefreshToken, TokenError
 from omg_app.models                         import User
 from ..forms                                import SignUpForm, LoginForm
 from datetime                               import datetime, timedelta
@@ -38,30 +38,12 @@ def signup(request):
             user = form.save(commit=False)  # 일단 데이터베이스에 저장하지 않고 인스턴스만 생성
             user.is_active = False  # 활성화 상태를 비활성으로 설정
             user.save()  # 이제 데이터베이스에 저장
-            # 이메일 인증 로직
-            send_verification_email(request, user)
-            return JsonResponse({'message': '이메일로 발송된 인증번호를 확인해주세요.'})
+            # [이메일 인증 로직 임시 주석처리 | 김민호]
+            # send_verification_email(request, user)
+            # return JsonResponse({'message': '이메일로 발송된 인증번호를 확인해주세요.'})
     else:
         form = SignUpForm()
     return render(request, 'login.html', {'form': form})
-
-
-def send_verification_email(request, user):
-    # JWT 토큰 생성
-    refresh = RefreshToken.for_user(user)
-    token = str(refresh.access_token)
-
-    # 인증 URL 생성 (이 부분은 실제 프로젝트의 URL 구조에 따라 조정해야 함)
-    verify_url = f"{request.scheme}://{request.get_host()}/email_verify/{token}/"
-
-    # 이메일 전송
-    send_mail (
-        '이메일 인증',
-        f'이메일 인증 링크: {verify_url}',
-        'jyys0531@gmail.com',  # 임의로 김민호 계정으로 작성해둠
-        [user.email],
-        fail_silently=False,
-    )
 
 
 def verify_email(request, token):
@@ -97,6 +79,27 @@ class UserInfoAPIView(APIView):
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+
+class RegisterAPIView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+
+            res = Response(
+                {
+                    "user": serializer.data,
+                    "message": "register success",
+
+                },
+                status = status.HTTP_200_OK,
+            )
+
+            return res
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+''' [임시주석처리(회원가입시 토큰 생성 안되게 기능 수정 진행 중) | 김민호]
 class RegisterAPIView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -110,11 +113,13 @@ class RegisterAPIView(APIView):
             res = Response(
                 {
                     "user": serializer.data,
-                    "message": "register successs",
+                    "message": "register success",
                     "token": {
                         "access": access_token,
                         "refresh": refresh_token,
                     },
+                    # 추후 리프레시 토큰 빼도 되는지 보기
+                    # access를 
                 },
                 status = status.HTTP_200_OK,
             )
@@ -125,7 +130,9 @@ class RegisterAPIView(APIView):
             
             return res
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+'''
     
+
 class AuthView(APIView):
 
     def post(self, request):
@@ -148,6 +155,9 @@ class AuthView(APIView):
                 },
                 status = status.HTTP_200_OK,
             )
+            res.set_cookie("access", access_token, httponly=True)
+            res.set_cookie("refresh", refresh_token, httponly=True)
+
             return res
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
