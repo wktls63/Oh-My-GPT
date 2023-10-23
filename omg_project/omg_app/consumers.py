@@ -31,6 +31,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # 채널 레이어에서 채팅방 제거
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
     
+    ## TODO: 모델이 메시지를 보냈을 경우, jwt 토큰이 없는데 이 경우 처리해주기
     async def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
         print(text_data_json)
