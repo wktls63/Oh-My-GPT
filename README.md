@@ -47,8 +47,7 @@
 ## 📅 개발 기간 및 일정
 ---
 <p>
-  2023.09.21(목) ~ 2023.10.06(금)<br/>
-  추석, 대체공휴일을 제외하고 <b>7일간 진행</b>되었습니다.
+  2023.10.10(화) ~ 2023.11.03(금)<br/>
 </p>
 
 <br />
@@ -107,32 +106,48 @@
         <b>이준형</b>
       </a>
     </td>
+    <td align="center">
+      <a>
+        <b>김유진</b>
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center">
-      <a>
-        1. 상품 등록 기능 구현 <br/>
-        2. 상품 수정, 삭제 기능 구현 <br/>
-        3. 상품 검색 기능 구현 <br/>
-      </a>
+<a>
+  
+  ![oL6EC37Nba1VeritJioM0EzNxthjHsZYxojFnrqwMDsF8848zel9Yu9NC8bY1nRenPYJerPTxZR-xISYNOPWo_bF7QEXw_Fc94GwOoy04XI48k70BrCcp-FNs6OU2dkga5WjxtslzkB-JnP9qtggUg webp](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/8925c815-8c2a-41ab-bf39-7345f942f475)
+
+</a>      
     </td>
     <td align="center">
-      <a>
-        1. 로그인/아웃 기능 구현 <br/>
-        2. 회원가입 기능 구현 <br/>
-      </a>
+<a>
+        
+![wallpaper-powfactor (1)](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/c8f9a30c-7ebc-4527-8a1f-d28d99a7f431)
+
+</a>
     </td>
     <td align="center">
-      <a>
-        1. 채팅 기능 구현 <br/>
-        2. 안 읽은 메세지 구현 <br/>
-      </a>
+<a>
+  
+![aa84c6338ad5c1e0](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/35d80e3b-e385-4f5b-8c5b-4e80ee8ffcd9)
+
+</a>
     </td>
     <td align="center">
-      <a>
-        1. 동네 인증 기능 구현 <br/>
-        2. 안 읽은 메시지 필터링 기능 구현 <br/>
-      </a>
+<a>
+  
+![wallpaper-powfactor](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/d655377c-168e-4431-9128-5118aaa21600)
+
+</a>
+    </td>
+    <td align="center">
+<a>
+
+![IMG_9486 JPG](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/98d295aa-3653-492b-b80e-ed3a24de75fc)
+
+
+</a>
     </td>
   </tr>
 </table>
