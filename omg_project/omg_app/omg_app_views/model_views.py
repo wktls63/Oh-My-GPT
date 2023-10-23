@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from ..models import AIModel
+from ..models import AIModel, User
 from ..forms import AIModelForm
 import os
+import jwt
 import paramiko
 import json
 from pathlib import Path
@@ -9,6 +10,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRETS_DIR = BASE_DIR / '.secrets'
 SSH = json.load(open(os.path.join(SECRETS_DIR, 'ssh.json')))
+secret = json.load(open(os.path.join(SECRETS_DIR, 'secret.json')))
+
+SECRET_KEY = secret['DJANGO_SECRET_KEY']
 
 def ssh_upload_file(local_file, remote_path, filename):
     ssh_host = SSH['HOST']
@@ -20,27 +24,42 @@ def ssh_upload_file(local_file, remote_path, filename):
     client.connect(ssh_host, port=ssh_port, username=ssh_user, password=ssh_password)
     
     sftp = client.open_sftp()
-    sftp.putfo(local_file, remote_path + '/' + filename)
+    
+    # 폴더가 없으면 생성
+    try:
+        sftp.stat(remote_path)
+    except FileNotFoundError:
+        sftp.mkdir(remote_path)
+    
+    sftp.putfo(local_file, os.path.join(remote_path, filename))
     sftp.close()
     client.close()
 
 def upload_model(request):
-    # if request.method == 'POST':
-    #     form = DataForm(request.POST, request.FILES)
-    #     if form.is_valid() or 'file_dir' in request.FILES:
-    #         csv_file = request.FILES.get('file_dir', None)
-    #         if csv_file:
-    #             file_name = csv_file.name
-    #             remote_path = 'path_on_ssh_server'
+    if request.method == 'POST':
+        form = AIModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            access_token = request.COOKIES.get('access')
+            refresh_token = request.COOKIES.get('refresh')    
 
-    #             # SSH 서버로 파일 전송
-    #             ssh_upload_file(csv_file, remote_path, file_name)
+            payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+            user = User.objects.get(id=payload['user_id'])
+            csv_file = request.FILES.get('file_dir', None)
 
-    #             # 이후 AIModel 처리...
+            if csv_file:
+                file_name = csv_file.name
+                model_instance = AIModel(user_id=user)
+                model_instance.save() 
 
-    #             return redirect('loading')
-    #     else:
-    #         print(form.errors)
-    # else:
-    #     form = DataForm()
+                # UUID를 폴더 이름으로 사용
+                remote_path = os.path.join('path_on_ssh_server', str(model_instance.model_id))
+
+                # SSH 서버로 파일 전송
+                ssh_upload_file(csv_file, remote_path, file_name)
+
+                return redirect('loading')
+        else:
+            print(form.errors)
+    else:
+        form = AIModelForm()
     return render(request, 'write.html', {'form': 'form'})
