@@ -1,4 +1,5 @@
-from django.shortcuts                       import render
+from django.shortcuts                       import render, redirect
+from django.contrib                         import messages
 from django.contrib.auth                    import authenticate, login as auth_login, logout as auth_logout
 from django.core.mail                       import send_mail
 from django.http                            import JsonResponse
@@ -17,6 +18,14 @@ from omg_app.serializers                    import RegisterSerializer, UserSeria
 from omg_project.settings                   import SECRET_KEY
 import jwt
 
+from django.contrib.sites.shortcuts         import get_current_site
+from django.template.loader                 import render_to_string
+from django.utils.http                      import urlsafe_base64_encode,urlsafe_base64_decode
+from django.core.mail                       import EmailMessage
+from django.utils.encoding                  import force_bytes, force_str
+from .tokens                                import account_activation_token
+
+
 
 
 ''' 기능 관련 '''
@@ -28,38 +37,46 @@ def user_login(request):
 
 def user_logout(request):
     auth_logout(request)
-    return JsonResponse({'message': '로그아웃 되었습니다.'})
+    messages.success(request, '로그아웃 되었습니다.')
+    return redirect('index')
     
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)  # 일단 데이터베이스에 저장하지 않고 인스턴스만 생성
-            user.is_active = False  # 활성화 상태를 비활성으로 설정
-            user.save()  # 이제 데이터베이스에 저장
-            # [이메일 인증 로직 임시 주석처리 | 김민호]
-            # send_verification_email(request, user)
-            # return JsonResponse({'message': '이메일로 발송된 인증번호를 확인해주세요.'})
-    else:
-        form = SignUpForm()
-    return render(request, 'login.html', {'form': form})
-
-
-def verify_email(request, token):
-    try:
-        # 토큰 검증
-        decoded_data = RefreshToken(token)
-        user = User.objects.get(id=decoded_data['user_id'])
-
-        # 이메일 검증 상태 업데이트
-        user.email_verified = True
+        user = User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
+        user.is_active = False
         user.save()
+        current_site = get_current_site(request) 
+        message = render_to_string('account/activation_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user),
+        })
+        mail_title = "[OMG] 계정 활성화 확인 이메일"
+        mail_to = request.POST["email"]
+        email = EmailMessage(mail_title, message, to=[mail_to])
+        email.send()
+        return redirect("/")
 
-        return JsonResponse({'message': '이메일 인증에 성공하였습니다.'})
-    except Exception as e:
-        return JsonResponse({'error': '이메일 인증에 실패하였습니다. 다시 시도해주세요.'}, status=400)
-    
+    return render(request, 'login.html')
+
+
+def verify_email(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExsit):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect("/")
+    else:
+        messages(request, '계정 활성화 오류')
+        return render(request, 'index.html')
+    return 
+    return    
 
 # celery와 같은 백그라언드 작업 큐를 사용하여 주기적인 작업을 스케줄링하도록 설정하면 인증되지 않은 데이터를 자동으로 삭제해줄 수 있음.
 # def delete_unverified_users():
