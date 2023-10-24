@@ -170,25 +170,29 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
         merchant_id: merchant_id,
         amount: amount,
         status: status, 
-        user_id : 1,
         subscription_product_id : subscription_product_id
 
     })
     const response = await fetch('http://127.0.0.1:8000/api/validation', data)
 
     if (response.status === 200) {
+
         alert('결제가 완료됐습니다.');
+
+    } else if (response.status === 423) {
+
+        alert("이미 결제된 상품 입니다.");
+
+    } else if (response.status === 418) {
+
+        alert("이미 구독중인 상품이 있습니다.");
+
     } else {
-        if (response.status === 404) {
-            alert("페이지가 존재하지 않습니다.");
-        } else if (response.status === 401) {
-            alert("로그인 해주세요.");
-        } else {
-            alert("문제가 발생했습니다. 다시 시도해주세요.");
-        }
+
+        alert("문제가 발생했습니다. 다시 시도해주세요.");
+
     }
 }
-
 
 async function getSubscriptionList() {
     const response = await fetch('http://127.0.0.1:8000/api/subscription');
