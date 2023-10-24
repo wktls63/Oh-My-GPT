@@ -81,7 +81,7 @@ REST_FRAMEWORK = {
 
 # jwt settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(seconds = 30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds = 9000),
     'REFRESH_TOKEN_LIFETIME': timedelta(days = 7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
