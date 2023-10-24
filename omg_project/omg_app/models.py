@@ -59,7 +59,7 @@ class User (AbstractBaseUser):
     payment_status                      = models.IntegerField(verbose_name = "결제 상태", choices = PAYMENT_CHOICES, default = PAYMENT_BASIC)
     registered_date                     = models.DateTimeField(verbose_name = "가입일", auto_now = True)
     
-    is_active                           = models.BooleanField(default = True)
+    is_active                           = models.BooleanField(default = False)
     is_staff                            = models.BooleanField(default = False)
 
     USERNAME_FIELD                      = "email"
@@ -169,8 +169,8 @@ class SubscriptionProduct(models.Model):
 
 
 class Payment(models.Model):
-    user_id                             = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
-    subscription_product_id             = models.ForeignKey(SubscriptionProduct, verbose_name = "상품ID", on_delete = models.CASCADE, default="")
+    user                                = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
+    subscription_product                = models.ForeignKey(SubscriptionProduct, verbose_name = "상품ID", on_delete = models.CASCADE, default="")
     merchant_id                         = models.UUIDField(verbose_name = "가맹점 코드", default = uuid.uuid4, editable = False)
     amount                              = models.PositiveIntegerField(verbose_name='결제 금액', default=100)
     payment_date                        = models.DateTimeField(verbose_name = "결제 갱신일", auto_now_add = True)
@@ -184,7 +184,7 @@ class Payment(models.Model):
                                             ('failed', '결제실패'),
                                             ('cancelled', '결제취소')
                                             ]
-    status                              = models.CharField(verbose_name='결제상태', default='await', choices=STATUS_CHOICES, max_length=10)
+    payment_status                      = models.CharField(verbose_name='결제상태', default='await', choices=STATUS_CHOICES, max_length=10)
 
 
     @property
