@@ -51,20 +51,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # 유저한테서 온 메시지라면
         if from_ == 'user':        
             # JWT 토큰에서 사용자 가져오기
-            access_token = self.scope.get('cookies', {}).get('access', None)
-            payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-            user = User.objects.filter(id=payload['user_id']).first()
+            # access_token = self.scope.get('cookies', {}).get('access', None)
+            # payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+            # user = User.objects.filter(id=payload['user_id']).first()
+            sender = text_data_json["sender"]
+            user = User.objects.filter(id=sender).first()
             
             print(user)
             if user is None:
                 # 인증 실패시 연결 종료
                 return await self.close()       
             
-            sender = user.id
-        
-            # 유저가 보낸 메시지일 경우
-            if User.objects.filter(id=sender).exists():
-                message_obj = Message.objects.create(chat_id=chat_room, sender_id=User.objects.get(id=sender), content=message)
+            message_obj = Message.objects.create(chat_id=chat_room, sender_id=User.objects.get(id=sender), content=message)
         
         # 모델이 보낸 메시지라면
         else:
