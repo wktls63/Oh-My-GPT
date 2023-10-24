@@ -25,7 +25,6 @@ api_patterns = [
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('write/', views.write, name='write'),
     path('loading/', views.loading, name='loading'),
     path('payment/', views.payment, name='payment'),
     path('intro/', views.intro, name='intro'),
