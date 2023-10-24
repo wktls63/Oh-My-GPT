@@ -14,7 +14,7 @@
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             {% comment %} <form action="/api/register" method="POST"> {% endcomment %}
-            <form method="POST">
+            <form method="POST" action="{% url 'signup' %}" class="forms">
                 {% csrf_token %}
                 <h1>Create Account</h1>
                 <input type="email" id="sign-up-email" placeholder="Email" name="email" required>
@@ -24,14 +24,14 @@
         </div>
         <div class="form-container sign-in-container">
             {% comment %} <form action="/user/login/" method="POST"> {% endcomment %}
-            <form method="POST">
+            <div class="forms">
                 {% csrf_token %}
                 <h1>Sign in</h1>
                 <input type="email" id="sign-in-email" placeholder="Email" name="email" required>
                 <input type="password" id="sign-in-password" placeholder="Password" name="password" required>
                 <a href="#">Forgot your password?</a>
                 <button id="sign-in-btn">Sign In</button>
-            </form>
+            </div>
         </div>
         <div class="overlay-container">
             <div class="overlay">
