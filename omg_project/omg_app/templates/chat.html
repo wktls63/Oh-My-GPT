@@ -46,7 +46,9 @@
 </body>
 <script>
     let chatSocekt = null;
+
     const MESSAGE_URI = "http://52.78.40.84:80/chat/messages/";
+    const USER_ID = {{user_id}};
 
     let currChatId = '0'; 
 
@@ -129,7 +131,7 @@
 
         const form = document.createElement('form');
         form.classList.add('chat-input');
-        
+        2ㄷ3ㄱ45ㄷ5ㄱ4
         const input = document.createElement('input');
         input.classList.add('chat-textarea');
         input.placeholder = '메세지를 입력해주세요';
@@ -154,6 +156,7 @@
         );
         const result = await response.json();
         drawMessageResolver(result);
+        moveScrollToBottom();
     }
 
     function drawMessageResolver(result) {
@@ -198,6 +201,7 @@
         chatSocket.send(JSON.stringify({
           'type': 'chat_message',
           'message': message,
+          'sender': USER_ID, 
           'from' : 'user'
         }));
         messageInputDom.value = '';

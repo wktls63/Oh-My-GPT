@@ -6,6 +6,7 @@ import jwt
 import paramiko
 import json
 from pathlib import Path
+from jwt import DecodeError
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRETS_DIR = BASE_DIR / '.secrets'
@@ -31,28 +32,41 @@ def ssh_upload_file(local_file, remote_path, filename):
     except FileNotFoundError:
         sftp.mkdir(remote_path)
     
-    sftp.putfo(local_file, os.path.join(remote_path, filename))
+    sftp.putfo(local_file, remote_path + '/' + filename)
     sftp.close()
     client.close()
+    
+def write(request):
+
+    access_token = request.COOKIES.get('access')
+    refresh_token = request.COOKIES.get('refresh')
+
+    payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+    user = User.objects.get(id=payload['user_id'])
+    
+    context = {
+        "user_id": user.id
+    }
+    return render(request, 'write.html', context)
+    
 
 def upload_model(request):
     if request.method == 'POST':
         form = AIModelForm(request.POST, request.FILES)
         if form.is_valid():
-            access_token = request.COOKIES.get('access')
-            refresh_token = request.COOKIES.get('refresh')    
+            user_id = request.POST.get('user_id')
+            model_name = request.POST.get('model_name')
+            user = User.objects.get(id=user_id)
 
-            payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-            user = User.objects.get(id=payload['user_id'])
             csv_file = request.FILES.get('file_dir', None)
 
             if csv_file:
                 file_name = csv_file.name
-                model_instance = AIModel(user_id=user)
+                model_instance = AIModel(user_id=user, model_name=model_name)
                 model_instance.save() 
 
                 # UUID를 폴더 이름으로 사용
-                remote_path = os.path.join('path_on_ssh_server', str(model_instance.model_id))
+                remote_path = f'path_on_ssh_server/{model_instance.model_id}'
 
                 # SSH 서버로 파일 전송
                 ssh_upload_file(csv_file, remote_path, file_name)
@@ -63,3 +77,4 @@ def upload_model(request):
     else:
         form = AIModelForm()
     return render(request, 'write.html', {'form': 'form'})
+
