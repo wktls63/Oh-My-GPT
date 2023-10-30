@@ -82,11 +82,11 @@ async function login() {
         "password" : password,
     })
 
-    const login_response = await fetch('http://127.0.0.1:8000/api/auth', data);
+    const login_response = await fetch('http://52.78.40.84:80/api/auth', data);
 
     if(login_response.status == 200) {
         alert('로그인 성공!')
-        location.href = 'http://127.0.0.1:8000/'
+        location.href = 'http://52.78.40.84:80/'
     } else {
         alert("사용자명과 비밀번호를 확인해 주세요.")
     }
