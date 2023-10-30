@@ -174,7 +174,7 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
         subscription_product_id : subscription_product_id
 
     })
-    const response = await fetch('http://127.0.0.1:8000/api/validation', data)
+    const response = await fetch('http://52.78.40.84:80/api/validation', data)
 
     if (response.status === 200) {
         alert('결제가 완료됐습니다.');
@@ -191,7 +191,7 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
 
 
 async function getSubscriptionList() {
-    const response = await fetch('http://127.0.0.1:8000/api/subscription');
+    const response = await fetch('http://52.78.40.84:80/api/subscription');
     const data = await response.json();
     return data;
   }
