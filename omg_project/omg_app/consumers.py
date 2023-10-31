@@ -2,6 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import ChatRoom, Message, User, AIModel
 import aiohttp
+import asyncio
 
 import jwt
 from pathlib import Path
@@ -48,11 +49,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         chat_room.last_message = message
         chat_room.save()
         
-        
         sender = text_data_json["sender"]
         user = User.objects.filter(id=sender).first()
             
-        print(user)
         if user is None:
             return await self.close() # 인증 실패시 연결 종료
 
@@ -69,10 +68,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
         
-        # TODO: 모델id 동적으로 변경하기
-        # 모델에 유저 메시지 전달
+        # 비동기 태스크로 AI 응답을 가져오는 부분을 실행
+        asyncio.create_task(self.get_and_send_ai_response(message, sender, chat_room))
+
+    # TODO: 모델id 동적으로 변경하기
+    async def get_and_send_ai_response(self, message, sender, chat_room):
         model_id = "05510328-7794-11ee-b962-0242ac120002"
-        print(f"message: {message}, sender: {sender}, model_id: {model_id}")
         ai_response = await self.get_ai_response(message, sender, model_id)
         ai_message_obj = Message.objects.create(chat_id=chat_room, is_user=False, content=ai_response)
         
@@ -85,6 +86,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "sender": "AI",  
             }
         )
+        
+        chat_room.last_message = ai_response
+        chat_room.save()
     
     async def chat_message(self, event):
         message = event["message"]
@@ -117,6 +121,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             async with session.post("http://oreumi.site:1217/generate/message", data=data_payload, headers=headers) as response:
                 if response.status == 200:
                     data = await response.json()
+                    print(data)
                     return data['message']
                 else:
                     error_message = await response.text()
