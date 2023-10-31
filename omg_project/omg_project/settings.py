@@ -81,7 +81,7 @@ REST_FRAMEWORK = {
 
 # jwt settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(seconds = 30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds = 9000),
     'REFRESH_TOKEN_LIFETIME': timedelta(days = 7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -204,3 +204,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 비동기 async 함수에서 ORM 조회 설정
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
+
+
+# mail 인증
+mail = json.load(open(os.path.join(SECRETS_DIR, 'mail.json')))
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = mail['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = mail['EMAIL_HOST_PASSWORD']
+DEFAULT_FROM_MAIL = EMAIL_HOST_USER

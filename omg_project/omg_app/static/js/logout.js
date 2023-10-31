@@ -9,10 +9,10 @@ proFileLogout.addEventListener('click', logout)
 
 
 async function logout() {
-    const logout_response = await fetch('http://127.0.0.1:8000/instragram/api/logout')
+    const logout_response = await fetch('http://52.78.40.84:80/instragram/api/logout')
 
     if(logout_response.status == 200) {
         alert('로그아웃 되었습니다.')
-        location.href = 'http://127.0.0.1:8000/'
+        location.href = 'http://52.78.40.84:80/'
     }
 }
