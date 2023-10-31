@@ -41,4 +41,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+class EmailSerializer(serializers.Serializer):
+    """
+    이메일 시리얼라이저
+    """
+    
+    email_title = serializers.CharField()
+    email_msg = serializers.CharField()
+    email = serializers.EmailField()
 
