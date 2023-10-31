@@ -3,52 +3,23 @@ from ..models import AIModel, User
 from ..forms import AIModelForm
 import os
 import jwt
-import paramiko
 import json
+import requests
 from pathlib import Path
 from jwt import DecodeError
+from django.core.mail                       import EmailMessage
+from rest_framework.response import Response
+from rest_framework import viewsets, status
+from ..serializers import EmailSerializer
+from rest_framework.views                   import APIView
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRETS_DIR = BASE_DIR / '.secrets'
-SSH = json.load(open(os.path.join(SECRETS_DIR, 'ssh.json')))
 secret = json.load(open(os.path.join(SECRETS_DIR, 'secret.json')))
 
 SECRET_KEY = secret['DJANGO_SECRET_KEY']
 
-def ssh_upload_file(local_file, remote_path, filename):
-    ssh_host = SSH['HOST']
-    ssh_port = SSH['PORT']
-    ssh_user = SSH['USER']
-    ssh_password = SSH['PASSWORD']
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ssh_host, port=ssh_port, username=ssh_user, password=ssh_password)
-    
-    sftp = client.open_sftp()
-    
-    # 폴더가 없으면 생성
-    try:
-        sftp.stat(remote_path)
-    except FileNotFoundError:
-        sftp.mkdir(remote_path)
-    
-    sftp.putfo(local_file, remote_path + '/' + filename)
-    sftp.close()
-    client.close()
-    
-def write(request):
 
-    access_token = request.COOKIES.get('access')
-    refresh_token = request.COOKIES.get('refresh')
-
-    payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-    user = User.objects.get(id=payload['user_id'])
-    
-    context = {
-        "user_id": user.id
-    }
-    return render(request, 'write.html', context)
-    
 
 def upload_model(request):
     if request.method == 'POST':
@@ -62,19 +33,47 @@ def upload_model(request):
 
             if csv_file:
                 file_name = csv_file.name
+                file_content = csv_file.read()
                 model_instance = AIModel(user_id=user, model_name=model_name)
                 model_instance.save() 
 
-                # UUID를 폴더 이름으로 사용
-                remote_path = f'path_on_ssh_server/{model_instance.model_id}'
+                url = "http://oreumi.site:1217/finetuning/uploadData"
+                data = {
+                    'my_model_id': model_instance.model_id,
+                    'my_model_name': model_name,
+                    'user_email': user.email
+                }
 
-                # SSH 서버로 파일 전송
-                ssh_upload_file(csv_file, remote_path, file_name)
+                files = {'file': (file_name, file_content)}
+                response = requests.post(url, data=data, files=files)
 
-                return redirect('loading')
+                # 응답 처리
+                if response.status_code == 200:
+                    return redirect('loading')
+                else:
+                    # 실패 시 처리 로직 (예: 에러 메시지 표시)
+                    return render(request, 'error.html', {'message': 'Upload failed.'})
         else:
             print(form.errors)
     else:
         form = AIModelForm()
     return render(request, 'write.html', {'form': 'form'})
 
+
+
+class EmailAPIView(APIView):
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid():
+            email_title = serializer.validated_data['email_title']
+            email_msg = serializer.validated_data['email_msg']
+            recipient_email = serializer.validated_data['email']
+
+            try:
+                email = EmailMessage(email_title, email_msg, to=[recipient_email])
+                email.send()
+                return Response({'status': 'success', 'message': 'Email sent successfully.'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'status': 'error', 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
