@@ -67,7 +67,7 @@ body {
     border-color: #FFFFFF;
 }
 
-.form-container form {
+.forms {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;

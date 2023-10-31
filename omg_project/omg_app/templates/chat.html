@@ -46,8 +46,10 @@
 </body>
 <script>
     let chatSocekt = null;
-    const MESSAGE_URI = "http://localhost:8000/chat/messages/"; // TODO: 배포 전 URL 수정\
+
+    const MESSAGE_URI = "http://52.78.40.84:80/chat/messages/";
     const USER_ID = {{user_id}};
+
     let currChatId = '0'; 
 
     async function initChat(chatId) {
