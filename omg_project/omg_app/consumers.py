@@ -1,6 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import ChatRoom, Message, User, AIModel
+import aiohttp
+import asyncio
 
 import jwt
 from pathlib import Path
@@ -33,7 +35,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # 채널 레이어에서 채팅방 제거
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
     
-    ## TODO: 모델이 메시지를 보냈을 경우, jwt 토큰이 없는데 이 경우 처리해주기
+    ## TODO: AI 서버에서 모델 메시지 받아오기
     async def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
         print(text_data_json)
@@ -47,28 +49,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
         chat_room.last_message = message
         chat_room.save()
         
-        
-        # 유저한테서 온 메시지라면
-        if from_ == 'user':        
-            # JWT 토큰에서 사용자 가져오기
-            # access_token = self.scope.get('cookies', {}).get('access', None)
-            # payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-            # user = User.objects.filter(id=payload['user_id']).first()
-            sender = text_data_json["sender"]
-            user = User.objects.filter(id=sender).first()
+        sender = text_data_json["sender"]
+        user = User.objects.filter(id=sender).first()
             
-            print(user)
-            if user is None:
-                # 인증 실패시 연결 종료
-                return await self.close()       
-            
-            message_obj = Message.objects.create(chat_id=chat_room, sender_id=User.objects.get(id=sender), content=message)
+        if user is None:
+            return await self.close() # 인증 실패시 연결 종료
+
+        # 유저 메시지 저장            
+        user_message_obj = Message.objects.create(chat_id=chat_room, sender_id=User.objects.get(id=sender), content=message)
         
-        # 모델이 보낸 메시지라면
-        else:
-            message_obj = Message.objects.create(chat_id=chat_room, is_user=False, content=message)
-        
-        # 메시지를 채팅방 그룹에 전송
+        # 사용자 메시지를 채팅방 그룹에 전송
         await self.channel_layer.group_send(
             self.room_group_name, {
                 "type": "chat_message",
@@ -77,6 +67,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "sender": from_,  
             }
         )
+        
+        # 비동기 태스크로 AI 응답을 가져오는 부분을 실행
+        asyncio.create_task(self.get_and_send_ai_response(message, sender, chat_room))
+
+    # TODO: 모델id 동적으로 변경하기
+    async def get_and_send_ai_response(self, message, sender, chat_room):
+        model_id = "05510328-7794-11ee-b962-0242ac120002"
+        ai_response = await self.get_ai_response(message, sender, model_id)
+        ai_message_obj = Message.objects.create(chat_id=chat_room, is_user=False, content=ai_response)
+        
+        # AI 응답을 채팅방 그룹에 전송
+        await self.channel_layer.group_send(
+            self.room_group_name, {
+                "type": "chat_message",
+                "message": ai_response,
+                "send_date": str(dt.datetime.now()),
+                "sender": "AI",  
+            }
+        )
+        
+        chat_room.last_message = ai_response
+        chat_room.save()
     
     async def chat_message(self, event):
         message = event["message"]
@@ -90,3 +102,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "send_date": send_date,
             "sender": sender 
         }))
+        
+    async def get_ai_response(self, message, user_id, model_id):
+        # 이 부분을 수정합니다.
+        data_payload = {
+            "userid": user_id,
+            "my_model_id": model_id,
+            "message": message
+        }
+        
+        print(data_payload)
+        
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post("http://oreumi.site:1217/generate/message", data=data_payload, headers=headers) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    print(data)
+                    return data['message']
+                else:
+                    error_message = await response.text()
+                    print(f"Error from AI server: {error_message}")
+                    return "모델에서 응답을 받아오지 못했습니다."
