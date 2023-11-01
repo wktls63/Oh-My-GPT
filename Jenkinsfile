@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build --tag ethanall94/omg_project .'
+                    sh '/usr/bin/docker build --tag ethanall94/omg_project .'
                 }
             }
         }
@@ -21,11 +21,10 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                        sh 'docker push ethanall94/omg_project'
+                        sh '/usr/bin/docker push ethanall94/omg_project'
                     }
                 }
             }
         }
-
     }
 }
