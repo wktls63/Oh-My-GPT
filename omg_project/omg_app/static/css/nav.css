@@ -8,7 +8,6 @@ body {
     justify-content: space-between;
     position: fixed;
     top: 0;
-    background-color: #fff;
     width: 100%;
     z-index: 999;
     text-decoration: none;
@@ -43,6 +42,14 @@ body {
     gap: 3vw;
 }
 
+.dark .nav-buttons a,
+.dark .user-buttons a {
+    color: #fefefe;
+    text-decoration: none;
+    font-size: 3vh;
+    font-weight: 700;
+}
+
 .nav-buttons a,
 .user-buttons a {
     color: black;
@@ -50,7 +57,6 @@ body {
     font-size: 3vh;
     font-weight: 700;
 }
-
 
 .nav-buttons a:hover,
 .user-buttons a:hover {

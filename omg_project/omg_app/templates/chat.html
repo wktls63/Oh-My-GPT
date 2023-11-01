@@ -9,45 +9,141 @@
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
     <title>Document</title>
 </head>
-<body>
+<body class="dark">
     
     {% include 'nav.html' %}
     
-    <div class="content-box">
-        <div class="container">
-        <div class="post-box">
+    <div class="container">
+    <div class="post-box">
 
-            <!-- 채팅 선택창 -->
-            <div class="chat-select-container">
+        <!-- 채팅 선택창 -->
+        <div class="chat-select-container">
 
-            <!-- 채팅 리스트 -->
-            <div class="chat-list-box">
-                <!-- 봇 -->
+            <!-- GPT 생성 버튼 -->
+            <div class="new-chat-btn">
+                <a class="new-chat-btn-link" href="http://{{domain}}/model/write/">
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon-sm shrink-0" height="1em" width="1em">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="truncate">New Chat</span>
+                </a>
+            </div>
+
+            <header class="big-title">
+                <span>Oh! My GPT</span>
+            </header>
+
+            <li class="chat-list-box">
                 {% for item in chat_list %}
-                <div class="chat-box" onclick="initChat({{ item.id }})"> 
-                <div class="ai-profile">
-                    <img src="{% static 'img/ai-icon.svg' %}" alt=""> <!-- TODO: AI 프로필 이미지 -->
-                </div>
-                <div>
-                    <p class="bold">{{item.model_id.model_name}}</p>
-                    <p class="chat-thumb-text">{{item.last_message}}</p>
-                </div>
-                </div>
+                <a class="chat-box" onclick="initChat({{ item.id }})">
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" 
+                            stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1em" width="1em">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span class="gpt-name">{{item.model_id.model_name}}</span>
+
+                    <!-- 수정 삭제 -->
+                    <div class="chat-edit-btns">
+                        <button class="edit-btn">
+                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                        </button>
+                        <button class="edit-btn">
+                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </a>
                 {% endfor %}
+            </li>
+
+            <!-- 결제와 개인 프로필 -->
+            <div class="profile-box">
+                <!-- 결제버튼 -->
+                <a class="plan-box-link" href="http://{{domain}}/payment/">
+                    <span class="plan-box-inner">
+                        <span class="gold-new-button">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="icon-sm shrink-0" height="1em" width="1em">
+                                <path d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm143.6 28.9l72.4-75.5V392c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V209.4l72.4 75.5c9.3 9.7 24.8 9.9 34.3.4l10.9-11c9.4-9.4 9.4-24.6 0-33.9L273 107.7c-9.4-9.4-24.6-9.4-33.9 0L106.3 240.4c-9.4 9.4-9.4 24.6 0 33.9l10.9 11c9.6 9.5 25.1 9.3 34.4-.4z"></path>
+                            </svg>Upgrade to Plus
+                        </span>
+                    </span>
+                </a>
+
+                <!-- 개인 프로필 -->
+                <div class="user-profile">
+                    <button class="user-profile-btn" type="button">
+                        <div class="user-img">
+                            <img alt="User" loading="lazy" width="32" height="32" class="rounded-sm"
+                                src="{% static 'img/ai-icon.svg' %}">
+                        </div>
+                        <div class="user-name">
+                            <div class="font-semibold">김나영</div>
+                        </div>
+                    </button>
+                </div>
+                
             </div>
+        </div>
+
+        <!-- 채팅창 -->
+        <div class="chat-main">
+            <div class="chat-main-container">
+
             </div>
 
-            <!-- 채팅창 -->
-            <div class="chat-main-container"></div>
+            <form class='chat-input disable'>
+                <input type="text" class="chat-textarea" placeholder="메세지를 입력해주세요">
+                <button onclick="sendMessage(event);">
+                    <a onclick="startRecord();">
+                        <img src="{% static 'img/mic.svg' %}" alt="">
+                    </a>
+                    <img src="{% static 'img/send.svg' %}" alt="">
+                </button>
+            </form>
+
         </div>
-        </div>
+    </div>
     </div>
 
 </body>
 <script>
+    //stt
+    const searchConsole = document.getElementsByClassName("chat-textarea")[0];
+    console.log(searchConsole);
+
+    function availabilityFunc() {
+    recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    recognition.lang = "ko";
+    recognition.maxAlternatives = 5;
+
+    if (!recognition) {
+        alert("현재 브라우저는 사용이 불가능합니다.");
+    }
+    }
+
+    function startRecord() {
+    recognition.addEventListener("result", function(e) {
+        searchConsole.value = e.results[0][0].transcript;
+    });
+
+    recognition.start();
+}
+
+window.addEventListener("load", availabilityFunc);
+</script>
+<script>
     let chatSocekt = null;
 
-    const MESSAGE_URI = "http://52.78.40.84:80/chat/messages/";
+    const MESSAGE_URI = "http://{{domain}}/chat/messages/";
     const USER_ID = {{user_id}};
 
     let currChatId = '0'; 
@@ -111,6 +207,10 @@
     
     // 새로운 채팅창을 만들어주는 함수
     function newChatDisplayResolver() {
+        // 채팅창과 함께 input box 나오게
+        const disableInput = document.getElementsByClassName('chat-input')[0];
+        disableInput.classList.remove('disable');
+
         const chatMainContainer = document.querySelector('.chat-main-container');
         chatMainContainer.innerHTML = '';
         
@@ -128,23 +228,6 @@
         const chatContainer = document.createElement('div');
         chatContainer.classList.add('chat-container');
         outterDiv.appendChild(chatContainer);
-
-        const form = document.createElement('form');
-        form.classList.add('chat-input');
-        2ㄷ3ㄱ45ㄷ5ㄱ4
-        const input = document.createElement('input');
-        input.classList.add('chat-textarea');
-        input.placeholder = '메세지를 입력해주세요';
-        form.appendChild(input);
-
-        const button = document.createElement('button');
-        button.setAttribute('onclick', 'sendMessage(event)');
-        const img = document.createElement('img');
-        img.src = "{% static 'img/send.svg' %}";
-        button.appendChild(img);
-        form.appendChild(button);
-
-        chatMainContainer.appendChild(form);
     }
 
      // 이전의 메시지를 불러오는 함수
@@ -177,7 +260,6 @@
         return `
         <div class="message-box from-you">
             <div class="message-text">${message}</div>
-            <p class="read-check">&bull;</p>
         </div>
         `;
     }
@@ -185,7 +267,6 @@
     function  getFromMeHtml(message) {
         return `
         <div class="message-box from-me">
-            <p class="read-check">&bull;</p>
             <div class="message-text">${message}</div>
         </div>
         `;

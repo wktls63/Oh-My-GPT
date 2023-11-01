@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.sites.shortcuts import get_current_site
 
 from ..models import Message, ChatRoom, User
 
@@ -36,10 +37,12 @@ def chat(request):
     chat_list = list(chat_list)
     chat_list.sort(key=lambda x: -x.id)
     print(chat_list)
+    current_site = get_current_site(request)
     
     context = {
         'chat_list': chat_list,
-        'user_id' : user.id
+        'user_id' : user.id,
+        'domain': current_site.domain
     }
     
     return render(request, 'chat.html', context)
