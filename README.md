@@ -116,36 +116,35 @@
     <td align="center">
 <a>
   
-  ![oL6EC37Nba1VeritJioM0EzNxthjHsZYxojFnrqwMDsF8848zel9Yu9NC8bY1nRenPYJerPTxZR-xISYNOPWo_bF7QEXw_Fc94GwOoy04XI48k70BrCcp-FNs6OU2dkga5WjxtslzkB-JnP9qtggUg webp](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/8925c815-8c2a-41ab-bf39-7345f942f475)
+![nayung](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/30c295c4-c1b7-40a7-aa82-ff3ce6fd5f12)
 
 </a>      
     </td>
     <td align="center">
 <a>
-        
-![wallpaper-powfactor (1)](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/c8f9a30c-7ebc-4527-8a1f-d28d99a7f431)
+  
+![mino](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/154d3e95-de09-4505-94e2-45ee63011761)
 
 </a>
     </td>
     <td align="center">
 <a>
   
-![aa84c6338ad5c1e0](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/35d80e3b-e385-4f5b-8c5b-4e80ee8ffcd9)
+![kyungmin](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/8cdbb850-b302-4031-a34e-ca6d2ce2b05c)
 
 </a>
     </td>
     <td align="center">
 <a>
   
-![wallpaper-powfactor](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/d655377c-168e-4431-9128-5118aaa21600)
+![lee](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/40b58f31-7d55-44bb-82f6-8f0302b58149)
 
 </a>
     </td>
     <td align="center">
 <a>
 
-![IMG_9486 JPG](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/98d295aa-3653-492b-b80e-ed3a24de75fc)
-
+![super](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/6be43dca-5490-4f82-99d1-159f4001bad6)
 
 </a>
     </td>
