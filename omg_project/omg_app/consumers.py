@@ -4,7 +4,6 @@ from .models import ChatRoom, Message, User, AIModel
 import aiohttp
 import asyncio
 
-import jwt
 from pathlib import Path
 import json
 import os
