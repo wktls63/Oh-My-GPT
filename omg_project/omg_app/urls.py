@@ -17,7 +17,7 @@ api_patterns = [
     path("register", RegisterAPIView.as_view()),
     path("auth", AuthView.as_view()),
     path('userinfo', UserInfoAPIView.as_view()),
-    path('email', EmailAPIView.as_view()),
+    path('email', EmailAPIView.as_view(), name='email'),
 ]
 
 
