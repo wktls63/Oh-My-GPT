@@ -34,7 +34,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # 채널 레이어에서 채팅방 제거
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
     
-    ## TODO: AI 서버에서 모델 메시지 받아오기
     async def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
         print(text_data_json)
