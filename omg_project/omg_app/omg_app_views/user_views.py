@@ -57,7 +57,8 @@ def signup(request):
         mail_to = request.POST["email"]
         email = EmailMessage(mail_title, message, to=[mail_to])
         email.send()
-        return redirect("/")
+        messages.success(request, '인증 메일이 발송되었습니다. 메일을 확인해주세요.')
+        return redirect("index")
 
     return render(request, 'login.html')
 
@@ -74,9 +75,7 @@ def verify_email(request, uidb64, token):
         return redirect("/")
     else:
         messages(request, '계정 활성화 오류')
-        return render(request, 'index.html')
-    return 
-    return    
+        return render(request, 'index.html')   
 
 # celery와 같은 백그라언드 작업 큐를 사용하여 주기적인 작업을 스케줄링하도록 설정하면 인증되지 않은 데이터를 자동으로 삭제해줄 수 있음.
 # def delete_unverified_users():
