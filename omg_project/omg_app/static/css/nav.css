@@ -2,6 +2,10 @@ body {
     font-family: 'Pretendard', sans-serif;
 }
 
+.lite_dark .navi {
+    background-color: rgb(0, 0, 0, .5);
+}
+
 .navi {
     display: flex;
     align-items: center;
@@ -44,6 +48,14 @@ body {
 .nav-buttons {
     display: flex;
     gap: 3vw;
+}
+
+.nav-buttons a:last-child {
+    color: #3385FF;
+}
+
+.dark .nav-buttons a:last-child {
+    color: #3385FF;
 }
 
 .dark .nav-buttons a,
