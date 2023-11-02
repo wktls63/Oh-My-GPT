@@ -170,17 +170,21 @@ def index(request):
         access_token = request.COOKIES.get('access')   
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
         user = User.objects.get(id=payload["user_id"])
-        user_info = Payment.objects.get(user_id = user.id).amount
-        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
+        user_grade = Payment.objects.get(user_id = user.id).payment_status
+        
+        content = {
+            'user_id' : user.id,
+            'user_grade' : user_grade,
+        }
 
     except:
-        user = None
+        user_id = None
         user_grade = None
 
-    content = {
-        'user_id' : user.id,
-        'user_grade' : user_grade,
-    }
+        content = {
+            'user_id' : user_id,
+            'user_grade' : 0,
+        }
 
     return render(request, 'index.html', content)
 
@@ -195,14 +199,19 @@ def intro(request):
         user_info = Payment.objects.get(user_id = user.id).amount
         user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
 
+        content = {
+            'user_id' : user.id,
+            'user_grade' : user_grade,
+        }
+
     except:
-        user = None
+        user_id = None
         user_grade = None
 
-    content = {
-        'user_id' : user.id,
-        'user_grade' : user_grade,
-    }
+        content = {
+            'user_id' : user_id,
+            'user_grade' : user_grade,
+        }
 
     return render(request, 'intro.html', content)
 
@@ -217,14 +226,19 @@ def center_write(request):
         user_info = Payment.objects.get(user_id = user.id).amount
         user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
 
+        content = {
+            'user_id' : user.id,
+            'user_grade' : user_grade,
+        }
+
     except:
-        user = None
+        user_id = None
         user_grade = None
 
-    content = {
-        'user_id' : user.id,
-        'user_grade' : user_grade,
-    }
+        content = {
+            'user_id' : user_id,
+            'user_grade' : user_grade,
+        }
 
     return render(request, 'center-write.html', content)
 
@@ -239,14 +253,19 @@ def payment(request):
         user_info = Payment.objects.get(user_id = user.id).amount
         user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
 
+        content = {
+            'user_id' : user.id,
+            'user_grade' : user_grade,
+        }
+
     except:
-        user = None
+        user_id = None
         user_grade = None
 
-    content = {
-        'user_id' : user.id,
-        'user_grade' : user_grade,
-    }
+        content = {
+            'user_id' : user_id,
+            'user_grade' : user_grade,
+        }
 
     return render(request, 'payment.html', content)
 

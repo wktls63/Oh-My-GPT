@@ -22,9 +22,21 @@
             </a>
             </div>
 
-            {% if user_grade %}
+            {% if user_grade == 0 %}
             <div class="user-buttons logout-buttons">
-                <a>{{ user_grade }}</a>
+                <a>BASIC</a>
+            </div>
+            {% elif user_grade == 1 %}
+            <div class="user-buttons logout-buttons">
+                <a>PRO</a>
+            </div>
+            {% elif user_grade == 2 %}
+            <div class="user-buttons logout-buttons">
+                <a>PRO_PLUS</a>
+            </div>
+            {% elif user_grade == 3 %}
+            <div class="user-buttons logout-buttons">
+                <a>ENTERPRISE</a>
             </div>
             {% endif %}
 
