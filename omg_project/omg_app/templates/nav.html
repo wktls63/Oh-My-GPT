@@ -21,6 +21,13 @@
                 나의 GPT
             </a>
             </div>
+
+            {% if user_grade %}
+            <div class="user-buttons logout-buttons">
+                <a>{{ user_grade }}</a>
+            </div>
+            {% endif %}
+
             {% if  user.is_authenticated %}
             <div class="user-buttons logout-buttons">
                 <a href="{% url 'logout' %}">로그아웃</a>
@@ -30,6 +37,7 @@
                 <a href="{% url 'login' %}">로그인</a>
             </div>
             {% endif %}
+
         </div>
     </div>
 </nav>

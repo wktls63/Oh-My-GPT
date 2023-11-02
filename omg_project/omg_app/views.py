@@ -33,6 +33,24 @@ class SubScriptionAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    
+class UserSubScriptionAPIView(APIView):
+    """
+    유저의 구독 서비스 상품을 불러오는 API
+    """
+
+    def get(self, request, **kwards):
+
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+
+        queryset = Payment.objects.filter(user_id=user.id)
+        print(queryset)
+        serializer = PaymentSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class UserSubScriptionAPIView(APIView):
     """
     유저의 구독 서비스 상품을 불러오는 API
@@ -148,25 +166,89 @@ class PaymentValidationView(APIView):
 
 
 def index(request):
-    return render(request, 'index.html')
+    try:
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+        user_info = Payment.objects.get(user_id = user.id).amount
+        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
+
+    except:
+        user = None
+        user_grade = None
+
+    content = {
+        'user_id' : user.id,
+        'user_grade' : user_grade,
+    }
+
+    return render(request, 'index.html', content)
 
 def loading(request):
     return render(request, 'loading.html')
 
 def intro(request):
-    return render(request, 'intro.html')
+    try:
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+        user_info = Payment.objects.get(user_id = user.id).amount
+        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
+
+    except:
+        user = None
+        user_grade = None
+
+    content = {
+        'user_id' : user.id,
+        'user_grade' : user_grade,
+    }
+
+    return render(request, 'intro.html', content)
 
 def login(request):
     return render(request, 'login.html')
 
 def center_write(request):
-    return render(request, 'center-write.html')
+    try:
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+        user_info = Payment.objects.get(user_id = user.id).amount
+        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
+
+    except:
+        user = None
+        user_grade = None
+
+    content = {
+        'user_id' : user.id,
+        'user_grade' : user_grade,
+    }
+
+    return render(request, 'center-write.html', content)
 
 def center(request):
     return render(request, 'center.html')
 
 def payment(request):
-    return render(request, 'payment.html')
+    try:
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+        user_info = Payment.objects.get(user_id = user.id).amount
+        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
+
+    except:
+        user = None
+        user_grade = None
+
+    content = {
+        'user_id' : user.id,
+        'user_grade' : user_grade,
+    }
+
+    return render(request, 'payment.html', content)
 
 def start(request):
     return render(request, 'start.html')

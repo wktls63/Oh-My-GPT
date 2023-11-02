@@ -1,7 +1,7 @@
 from . import views
 from django.urls import path, include
 
-from .views import SubScriptionAPIView, PaymentValidationView, UserSubScriptionAPIView
+from .views import SubScriptionAPIView, PaymentValidationView
 from .omg_app_views.user_views import RegisterAPIView, AuthView, UserInfoAPIView
 from .omg_app_views.model_views import EmailAPIView
 
@@ -17,7 +17,6 @@ api_patterns = [
     path("register", RegisterAPIView.as_view()),
     path("auth", AuthView.as_view()),
     path('userinfo', UserInfoAPIView.as_view()),
-    path('usersubscription', UserSubScriptionAPIView.as_view()),
     path('email', EmailAPIView.as_view(), name='email'),
 ]
 
