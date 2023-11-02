@@ -169,24 +169,23 @@ def index(request):
     try:
         access_token = request.COOKIES.get('access')   
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-        user = User.objects.get(id=payload["user_id"])
-        user_grade = Payment.objects.get(user_id = user.id).payment_status
-        
-        content = {
-            'user_id' : user.id,
-            'user_grade' : user_grade,
-        }
+        user = User.objects.get(id=payload["user_id"]).id
+        try:
+            user_grade = Payment.objects.get(user_id = user).payment_status
+        except:
+            user_grade = None
 
     except:
-        user_id = None
+        user = None
         user_grade = None
 
-        content = {
-            'user_id' : user_id,
-            'user_grade' : 0,
-        }
-
+    content = {
+        'user_id' : user,
+        'user_grade' : user_grade,
+    }
+    
     return render(request, 'index.html', content)
+
 
 def loading(request):
     return render(request, 'loading.html')
@@ -195,24 +194,21 @@ def intro(request):
     try:
         access_token = request.COOKIES.get('access')   
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-        user = User.objects.get(id=payload["user_id"])
-        user_info = Payment.objects.get(user_id = user.id).amount
-        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
-
-        content = {
-            'user_id' : user.id,
-            'user_grade' : user_grade,
-        }
+        user = User.objects.get(id=payload["user_id"]).id
+        try:
+            user_grade = Payment.objects.get(user_id = user).payment_status
+        except:
+            user_grade = None
 
     except:
-        user_id = None
+        user = None
         user_grade = None
 
-        content = {
-            'user_id' : user_id,
-            'user_grade' : user_grade,
-        }
-
+    content = {
+        'user_id' : user,
+        'user_grade' : user_grade,
+    }
+    
     return render(request, 'intro.html', content)
 
 def login(request):
@@ -222,24 +218,21 @@ def center_write(request):
     try:
         access_token = request.COOKIES.get('access')   
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-        user = User.objects.get(id=payload["user_id"])
-        user_info = Payment.objects.get(user_id = user.id).amount
-        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
-
-        content = {
-            'user_id' : user.id,
-            'user_grade' : user_grade,
-        }
+        user = User.objects.get(id=payload["user_id"]).id
+        try:
+            user_grade = Payment.objects.get(user_id = user).payment_status
+        except:
+            user_grade = None
 
     except:
-        user_id = None
+        user = None
         user_grade = None
 
-        content = {
-            'user_id' : user_id,
-            'user_grade' : user_grade,
-        }
-
+    content = {
+        'user_id' : user,
+        'user_grade' : user_grade,
+    }
+    
     return render(request, 'center-write.html', content)
 
 def center(request):
@@ -249,24 +242,21 @@ def payment(request):
     try:
         access_token = request.COOKIES.get('access')   
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-        user = User.objects.get(id=payload["user_id"])
-        user_info = Payment.objects.get(user_id = user.id).amount
-        user_grade = SubscriptionProduct.objects.get(amount = user_info).item_name
-
-        content = {
-            'user_id' : user.id,
-            'user_grade' : user_grade,
-        }
+        user = User.objects.get(id=payload["user_id"]).id
+        try:
+            user_grade = Payment.objects.get(user_id = user).payment_status
+        except:
+            user_grade = None
 
     except:
-        user_id = None
+        user = None
         user_grade = None
 
-        content = {
-            'user_id' : user_id,
-            'user_grade' : user_grade,
-        }
-
+    content = {
+        'user_id' : user,
+        'user_grade' : user_grade,
+    }
+    
     return render(request, 'payment.html', content)
 
 def start(request):
