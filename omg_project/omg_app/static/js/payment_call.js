@@ -173,7 +173,7 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
         subscription_product_id : subscription_product_id
 
     })
-    const response = await fetch('http://52.78.40.84:80/api/validation', data)
+    const response = await fetch('http://52.78.40.84:80/validation', data)
 
     if (response.status === 200) {
 
