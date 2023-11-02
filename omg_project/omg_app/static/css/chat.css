@@ -321,21 +321,27 @@ body::-webkit-scrollbar {
     border-top: none;
 }
 
-.from-me div {
+.from-me.message-box {
     background-color: transparent;
-    padding: 2rem 20rem;
+}
+
+.from-you.message-box {
+    background-color: rgba(68,70,84,1);
+}
+
+.from-me div {
+    margin: 2rem 20rem;
 }
 
 .from-you div {
-    background-color: rgba(68,70,84,1);
-    padding: 2rem 20rem;
+    margin: 2rem 20rem;
 }
 
 .message-text {
     height: fit-content;
     color: rgba(217,217,227,.8);
     width: 100%;
-    max-width: 48rem;
+    /* max-width: 48rem; */
     line-height: 1.8;
 }
 

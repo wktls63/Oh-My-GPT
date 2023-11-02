@@ -34,7 +34,7 @@
 
             <li class="chat-list-box">
                 {% for item in chat_list %}
-                <a class="chat-box" onclick="initChat({{ item.id }})">
+                <a class="chat-box" onclick="initChat({{ item.id }}, '{{ item.model_id.model_name }}')">
                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" 
                             stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1em" width="1em">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -64,7 +64,7 @@
                                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                             </svg>
                         </button>
-                        <button id="del-btn" class="edit-btn">
+                        <button id="del-btn" class="edit-btn", onclick="deleteMessages({{item.id}})">
                             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -98,7 +98,7 @@
                                 src="{% static 'img/ai-icon.svg' %}">
                         </div>
                         <div class="user-name">
-                            <div class="font-semibold">김나영</div>
+                            <div class="font-semibold">{{user}}</div>
                         </div>
                     </button>
                 </div>
@@ -112,7 +112,7 @@
 
             </div>
 
-            <form class='chat-input disable'>
+            <div class='chat-input disable'>
                 <input type="text" class="chat-textarea" placeholder="메세지를 입력해주세요">
                 <button onclick="sendMessage(event);">
                     <a onclick="startRecord();">
@@ -120,31 +120,13 @@
                     </a>
                     <img src="{% static 'img/send.svg' %}" alt="">
                 </button>
-            </form>
+            </div>
 
         </div>
     </div>
     </div>
 
 </body>
-<script>
-    //삭제 모달
-    document.querySelector('#del-btn').addEventListener('click',function(){
-        document.querySelector('.black-bg').classList.remove('noshow');
-        document.querySelector('.black-bg').classList.add('modal-open');
-    })
-
-    document.querySelector('#close').addEventListener('click',function(){
-        document.querySelector('.black-bg').classList.add('noshow');
-    })
-    
-    document.querySelector('.black-bg').addEventListener("click", function(e){
-        const evTarget = e.target
-        if(evTarget.classList.contains("modal-open")) {
-            document.querySelector('.black-bg').classList.add('noshow');
-        }
-    })
-</script>
 <script>
     //TTS
     function yuna_speak(innerMessage) {
@@ -186,14 +168,15 @@
     let chatSocekt = null;
 
     const MESSAGE_URI = "http://{{domain}}/chat/messages/";
+    const MESSAGE_DEL_URI = "http://{{domain}}/chat/delete-messages/";
     const USER_ID = {{user_id}};
 
     let currChatId = '0'; 
 
-    async function initChat(chatId) {
+    async function initChat(chatId, modelName) {
         currChatId = chatId;
         await initNewWebSocket(chatId);
-        makeNewChatDisplayAndGetPastMessages(chatId);
+        makeNewChatDisplayAndGetPastMessages(chatId, modelName);
     }
 
     function getJWTToken() {
@@ -242,13 +225,13 @@
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    function makeNewChatDisplayAndGetPastMessages(chatId) {
-        newChatDisplayResolver();
+    function makeNewChatDisplayAndGetPastMessages(chatId, modelName) {
+        newChatDisplayResolver(modelName);
         pastMessagesResolver(chatId);
     }
     
     // 새로운 채팅창을 만들어주는 함수
-    function newChatDisplayResolver() {
+    function newChatDisplayResolver(modelName) {
         // 채팅창과 함께 input box 나오게
         const disableInput = document.getElementsByClassName('chat-input')[0];
         disableInput.classList.remove('disable');
@@ -270,10 +253,19 @@
         const chatContainer = document.createElement('div');
         chatContainer.classList.add('chat-container');
         outterDiv.appendChild(chatContainer);
+
+        showModelName(modelName);
+    }
+
+    function showModelName(modelName) {
+        const modelNameElem = document.querySelector(".contact-info a");
+        console.log(modelNameElem);
+        console.log(modelName);
+        modelNameElem.innerText = modelName;
     }
 
      // 이전의 메시지를 불러오는 함수
-     async function pastMessagesResolver(chatId) {
+    async function pastMessagesResolver(chatId) {
         const response = await fetch(MESSAGE_URI + chatId, {
             method: 'GET',
             headers: {'X-CSRFToken': "{{csrf_token}}"}
@@ -329,6 +321,22 @@
         }));
         messageInputDom.value = '';
     }
+
+    // 모든 채팅방 메시지를 삭제하는 함수
+    async function deleteMessages(chatId) {
+        const response = await fetch(MESSAGE_DEL_URI + chatId, {
+            method: 'DELETE',
+            headers: {'X-CSRFToken': "{{csrf_token}}"}
+          }
+        );
+        const result = await response.json();
+        alert("메시지가 성공적으로 삭제되었습니다.");
+    }
+
+    // AI 모델 이름을 수정하는 함수
+    // function updateAIModelName() {
+    //     
+    // }
 
 </script>
 </html>

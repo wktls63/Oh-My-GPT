@@ -36,10 +36,14 @@ def user_login(request):
 
 
 def user_logout(request):
-    auth_logout(request)
     messages.success(request, '로그아웃 되었습니다.')
-    return redirect('index')
-    
+    response = redirect('/')
+    response.delete_cookie('access')
+    response.delete_cookie('refresh')
+    response.delete_cookie('csrftoken')
+
+    return response
+
 
 def signup(request):
     if request.method == 'POST':
