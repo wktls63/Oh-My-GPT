@@ -34,7 +34,7 @@
 
             <li class="chat-list-box">
                 {% for item in chat_list %}
-                <a class="chat-box" onclick="initChat({{ item.id }})">
+                <a class="chat-box" onclick="initChat({{ item.id }}, '{{ item.model_id.model_name }}')">
                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" 
                             stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1em" width="1em">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -112,7 +112,7 @@
 
             </div>
 
-            <form class='chat-input disable'>
+            <div class='chat-input disable'>
                 <input type="text" class="chat-textarea" placeholder="메세지를 입력해주세요">
                 <button onclick="sendMessage(event);">
                     <a onclick="startRecord();">
@@ -120,7 +120,7 @@
                     </a>
                     <img src="{% static 'img/send.svg' %}" alt="">
                 </button>
-            </form>
+            </div>
 
         </div>
     </div>
@@ -173,10 +173,10 @@
 
     let currChatId = '0'; 
 
-    async function initChat(chatId) {
+    async function initChat(chatId, modelName) {
         currChatId = chatId;
         await initNewWebSocket(chatId);
-        makeNewChatDisplayAndGetPastMessages(chatId);
+        makeNewChatDisplayAndGetPastMessages(chatId, modelName);
     }
 
     function getJWTToken() {
@@ -225,13 +225,13 @@
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    function makeNewChatDisplayAndGetPastMessages(chatId) {
-        newChatDisplayResolver();
+    function makeNewChatDisplayAndGetPastMessages(chatId, modelName) {
+        newChatDisplayResolver(modelName);
         pastMessagesResolver(chatId);
     }
     
     // 새로운 채팅창을 만들어주는 함수
-    function newChatDisplayResolver() {
+    function newChatDisplayResolver(modelName) {
         // 채팅창과 함께 input box 나오게
         const disableInput = document.getElementsByClassName('chat-input')[0];
         disableInput.classList.remove('disable');
@@ -253,10 +253,19 @@
         const chatContainer = document.createElement('div');
         chatContainer.classList.add('chat-container');
         outterDiv.appendChild(chatContainer);
+
+        showModelName(modelName);
+    }
+
+    function showModelName(modelName) {
+        const modelNameElem = document.querySelector(".contact-info a");
+        console.log(modelNameElem);
+        console.log(modelName);
+        modelNameElem.innerText = modelName;
     }
 
      // 이전의 메시지를 불러오는 함수
-     async function pastMessagesResolver(chatId) {
+    async function pastMessagesResolver(chatId) {
         const response = await fetch(MESSAGE_URI + chatId, {
             method: 'GET',
             headers: {'X-CSRFToken': "{{csrf_token}}"}
