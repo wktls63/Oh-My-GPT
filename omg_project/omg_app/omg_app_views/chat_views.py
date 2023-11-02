@@ -40,8 +40,8 @@ def chat(request):
     if user:
         default_model1 = AIModel.objects.get_or_create(model_id="05510328-7794-11ee-b962-0242ac120002", model_name="김나영밖에 모르는 GPT", user_id=user)[0]
         default_model2 = AIModel.objects.get_or_create(model_id="a576640e-794e-11ee-b962-0242ac120002", model_name="민원 GPT", user_id=user)[0]
-        default_room1 = ChatRoom.objects.get_or_create(model_id=default_model1 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")[0]
-        default_room2 = ChatRoom.objects.get_or_create(model_id=default_model2 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")[0]
+        default_room1 = ChatRoom.objects.get_or_create(model_id_id=default_model1.model_pk, user_id=user)[0]
+        default_room2 = ChatRoom.objects.get_or_create(model_id_id=default_model2.model_pk, user_id=user)[0]
     
     chat_list = ChatRoom.objects.filter(user_id=user).select_related('model_id')
     chat_list = list(chat_list)

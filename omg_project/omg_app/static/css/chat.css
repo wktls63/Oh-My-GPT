@@ -321,11 +321,11 @@ body::-webkit-scrollbar {
     border-top: none;
 }
 
-.message-box:nth-child(odd) {
+.from-me.message-box {
     background-color: transparent;
 }
 
-.message-box:nth-child(even) {
+.from-you.message-box {
     background-color: rgba(68,70,84,1);
 }
 
