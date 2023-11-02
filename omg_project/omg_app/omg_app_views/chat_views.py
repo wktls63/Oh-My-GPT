@@ -9,6 +9,9 @@ from pathlib import Path
 import json
 import os
 
+from rest_framework.response import Response
+from rest_framework import status
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRETS_DIR = BASE_DIR / '.secrets'
@@ -31,13 +34,14 @@ def chat(request):
     refresh_token = request.COOKIES.get('refresh')    
 
     payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-    user = User.objects.get(id=payload['user_id'])
+    user = User.objects.filter(id=payload['user_id']).first()
     
     # 김나영밖에 모르는 GPT와 민원 GPT 기본 생성
-    default_model1 = AIModel.objects.get_or_create(model_id="05510328-7794-11ee-b962-0242ac120002", model_name="김나영밖에 모르는 GPT", user_id=user)[0]
-    default_model2 = AIModel.objects.get_or_create(model_id="a576640e-794e-11ee-b962-0242ac120002", model_name="민원 GPT", user_id=user)[0]
-    default_room1 = ChatRoom.objects.get_or_create(model_id=default_model1 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")
-    default_room2 = ChatRoom.objects.get_or_create(model_id=default_model2 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")
+    if user:
+        default_model1 = AIModel.objects.get_or_create(model_id="05510328-7794-11ee-b962-0242ac120002", model_name="김나영밖에 모르는 GPT", user_id=user)[0]
+        default_model2 = AIModel.objects.get_or_create(model_id="a576640e-794e-11ee-b962-0242ac120002", model_name="민원 GPT", user_id=user)[0]
+        default_room1 = ChatRoom.objects.get_or_create(model_id=default_model1 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")[0]
+        default_room2 = ChatRoom.objects.get_or_create(model_id=default_model2 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")[0]
     
     chat_list = ChatRoom.objects.filter(user_id=user).select_related('model_id')
     chat_list = list(chat_list)
@@ -67,3 +71,14 @@ def messages(request, chat_id) :
     messages = list(messages)
     messages.sort(key=lambda x: x['send_date'])
     return JsonResponse(list(messages), safe=False)
+
+def delete_messages(request, chat_id):
+    if request.method == 'DELETE':
+        print(f"delete_messages 진입 : {chat_id}")
+        chat = ChatRoom.objects.get(id=chat_id)
+        print(chat)
+        messages = Message.objects.filter(chat_id=chat_id)
+        for message in messages:
+            message.delete()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)

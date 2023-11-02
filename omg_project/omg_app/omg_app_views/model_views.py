@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..models import AIModel, User
+from ..models import AIModel, User, ChatRoom
 from ..forms import AIModelForm
 import os
 import jwt
@@ -77,3 +77,12 @@ class EmailAPIView(APIView):
                 return Response({'status': 'error', 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class ModelViewSet(APIView):
+    def put(self, request):
+        model_id = ChatRoom.objects.get(id=request.data['chat_id']).model_id_id
+        model = AIModel.objects.get(model_id=model_id)
+        model.model_name = request.data['model_name']
+        model.save()
+        return Response(status=status.HTTP_200_OK)
