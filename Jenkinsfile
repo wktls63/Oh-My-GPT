@@ -8,6 +8,27 @@ pipeline {
             }
         }
 
+        environment {
+            DB_JSON = credentials('DB_JSON_ID')  // ID는 앞서 생성한 자격 증명의 ID입니다.
+            MAIL_JSON = credentials('MAIL_JSON_ID')
+            SECRET_JSON = credentials('SECRET_JSON_ID')
+            SSH_JSON = credentials('SSH_JSON_ID')
+        }
+
+        stages {
+            stage('Use Secrets') {
+                steps {
+                    script {
+                        // 이제 환경 변수를 통해 DB_JSON 값을 사용할 수 있습니다.
+                        writeFile file: '.secrets/db.json', text: env.DB_JSON
+                        writeFile file: '.secrets/mail.json', text: env.MAIL_JSON
+                        writeFile file: '.secrets/secret.json', text: env.SECRET_JSON
+                        writeFile file: '.secrets/ssh.json', text: env.SSH_JSON
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
