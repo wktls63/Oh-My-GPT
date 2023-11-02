@@ -1,5 +1,12 @@
 body {
     background-color: rgba(52,53,65,1);
+    overflow: hidden;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 
 .bold {
@@ -24,7 +31,6 @@ body {
     display: flex;
     align-items: center;
     border: 1px solid rgba(32,33,35,.5);
-    margin: 4rem 0 0 0 ;
     align-items: stretch;
     height: 100%;
 }
@@ -267,10 +273,16 @@ body {
 }
 
 .chat-main {
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.chat-main-container {
+    max-height: 100%;
+    overflow-y: scroll;
 }
 
 .contact-info {
@@ -310,12 +322,12 @@ body {
 }
 
 .from-me div {
-    background-color: rgba(68,70,84,1);
+    background-color: transparent;
     padding: 2rem 20rem;
 }
 
 .from-you div {
-    background-color: transparent;
+    background-color: rgba(68,70,84,1);
     padding: 2rem 20rem;
 }
 
@@ -388,4 +400,57 @@ body {
 
 .disable {
     display: none;
+}
+
+
+/* del-btn modal */
+.black-bg {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    background-color: rgba(86,88,105,.7);
+    z-index: 1000;
+
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.white-bg {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    justify-content: center;
+    background-color: rgba(32,33,35,1);
+    border-radius: 5px;
+    padding: 30px;
+} 
+
+.modal-btn {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-btn button {
+    color: rgba(217,217,227,1);
+    font-weight: 700;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+}
+
+.noshow {
+    display: none; 
+}
+
+.del-title {
+    color: rgba(217,217,227,1);
+    font-weight: 700;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
 }
