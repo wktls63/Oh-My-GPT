@@ -47,6 +47,7 @@ def chat(request):
     
     context = {
         'chat_list': chat_list,
+        'user' : user,
         'user_id' : user.id,
         'domain': current_site.domain
     }
