@@ -34,7 +34,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # 채널 레이어에서 채팅방 제거
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
     
-    ## TODO: AI 서버에서 모델 메시지 받아오기
     async def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
         print(text_data_json)
@@ -44,7 +43,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         from_ = text_data_json["from"] # 모델인지 사용자인지 판별
         
         # 채팅방에 마지막 메시지 업데이트
-        chat_room = ChatRoom.objects.get(id=chat_id)
+        chat_room = ChatRoom.objects.filter(id=chat_id).select_related('model_id')[0]
         chat_room.last_message = message
         chat_room.save()
         
@@ -68,12 +67,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
         
         # 비동기 태스크로 AI 응답을 가져오는 부분을 실행
-        asyncio.create_task(self.get_and_send_ai_response(message, sender, chat_room))
+        model_id = AIModel.objects.get(model_pk=chat_room.model_id_id).model_id
+        asyncio.create_task(self.get_and_send_ai_response(message, sender, chat_room, model_id))
 
-    # TODO: 모델id 동적으로 변경하기
-    async def get_and_send_ai_response(self, message, sender, chat_room):
-        model_id = "05510328-7794-11ee-b962-0242ac120002"
+
+    async def get_and_send_ai_response(self, message, sender, chat_room, model_id):
         ai_response = await self.get_ai_response(message, sender, model_id)
+        print(f"ai_response: {ai_response}")
         ai_message_obj = Message.objects.create(chat_id=chat_room, is_user=False, content=ai_response)
         
         # AI 응답을 채팅방 그룹에 전송

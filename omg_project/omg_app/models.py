@@ -105,7 +105,8 @@ class AIModel(models.Model):
     """
     AI모델에 대한 모델
     """
-    model_id                            = models.UUIDField(primary_key=True, verbose_name = "모델 id", default = uuid.uuid4, editable = False)
+    model_pk                            = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    model_id                            = models.UUIDField(verbose_name = "모델 id", editable = False)
     user_id                             = models.ForeignKey(User, verbose_name = "유저 id", on_delete = models.CASCADE)
     model_name                          = models.CharField(verbose_name = "모델 이름", max_length = 50)
     create_date                         = models.DateTimeField(verbose_name = "생성일", auto_now_add=True)

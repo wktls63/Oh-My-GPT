@@ -37,6 +37,10 @@ body {
     object-fit: contain;
 }
 
+.dark .logo img {
+    filter: invert(100%);
+}
+
 .nav-buttons {
     display: flex;
     gap: 3vw;
