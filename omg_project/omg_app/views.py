@@ -33,6 +33,23 @@ class SubScriptionAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+class UserSubScriptionAPIView(APIView):
+    """
+    유저의 구독 서비스 상품을 불러오는 API
+    """
+
+    def get(self, request, **kwards):
+
+        access_token = request.COOKIES.get('access')   
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.get(id=payload["user_id"])
+
+        queryset = Payment.objects.filter(user_id=user.id)
+        print(queryset)
+        serializer = PaymentSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 class PaymentValidationView(APIView):
     """
     결제 요청 POST를 받으면 결제를 진행하는 API
