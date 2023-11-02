@@ -11,13 +11,13 @@
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/pnltri.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/bas.js"></script>
+    <script src="{% static 'js/start.js' %}?{% now "U" %}"></script>
 </head>
 <body>
     <div id="three-container"></div>
 
-    <div id="instructions">
-        click and drag to control the animation
+    <div id="instructions" onclick="location.href='{% url 'index' %}'">
+        home
     </div>
 </body>
-<script src="{% static 'js/start.js' %}?{% now "U" %}"></script>
 </html>
