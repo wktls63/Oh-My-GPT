@@ -21,6 +21,25 @@
                 나의 GPT
             </a>
             </div>
+
+            {% if user_grade == 0 %}
+            <div class="user-buttons logout-buttons">
+                <a>BASIC</a>
+            </div>
+            {% elif user_grade == 1 %}
+            <div class="user-buttons logout-buttons">
+                <a>PRO</a>
+            </div>
+            {% elif user_grade == 2 %}
+            <div class="user-buttons logout-buttons">
+                <a>PRO_PLUS</a>
+            </div>
+            {% elif user_grade == 3 %}
+            <div class="user-buttons logout-buttons">
+                <a>ENTERPRISE</a>
+            </div>
+            {% endif %}
+
             {% if  user.is_authenticated %}
             <div class="user-buttons logout-buttons">
                 <a href="{% url 'logout' %}">로그아웃</a>
@@ -30,6 +49,7 @@
                 <a href="{% url 'login' %}">로그인</a>
             </div>
             {% endif %}
+
         </div>
     </div>
 </nav>
