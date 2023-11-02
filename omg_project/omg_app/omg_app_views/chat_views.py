@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
 
-from ..models import Message, ChatRoom, User
+from ..models import Message, ChatRoom, User, AIModel
 
 import jwt
 from pathlib import Path
@@ -32,11 +32,17 @@ def chat(request):
 
     payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
     user = User.objects.get(id=payload['user_id'])
-    print(user)
+    
+    # 김나영밖에 모르는 GPT와 민원 GPT 기본 생성
+    default_model1 = AIModel.objects.get_or_create(model_id="05510328-7794-11ee-b962-0242ac120002", model_name="김나영밖에 모르는 GPT", user_id=user)[0]
+    default_model2 = AIModel.objects.get_or_create(model_id="a576640e-794e-11ee-b962-0242ac120002", model_name="민원 GPT", user_id=user)[0]
+    default_room1 = ChatRoom.objects.get_or_create(model_id=default_model1 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")
+    default_room2 = ChatRoom.objects.get_or_create(model_id=default_model2 , user_id=user, last_message="GPT 생성이 완료되었습니다. 대화를 시작해보세요!")
+    
     chat_list = ChatRoom.objects.filter(user_id=user).select_related('model_id')
     chat_list = list(chat_list)
     chat_list.sort(key=lambda x: -x.id)
-    print(chat_list)
+    
     current_site = get_current_site(request)
     
     context = {
