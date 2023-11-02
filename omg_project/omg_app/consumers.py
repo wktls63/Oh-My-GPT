@@ -67,7 +67,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
         
         # 비동기 태스크로 AI 응답을 가져오는 부분을 실행
-        model_id = chat_room.model_id_id
+        model_id = AIModel.objects.get(model_pk=chat_room.model_id_id).model_id
         asyncio.create_task(self.get_and_send_ai_response(message, sender, chat_room, model_id))
 
 
