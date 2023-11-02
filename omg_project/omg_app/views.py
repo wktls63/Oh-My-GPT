@@ -150,3 +150,6 @@ def center(request):
 
 def payment(request):
     return render(request, 'payment.html')
+
+def start(request):
+    return render(request, 'start.html')

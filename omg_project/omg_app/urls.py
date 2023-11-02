@@ -31,7 +31,7 @@ urlpatterns = [
     # path('login/', views.login, name='login'),
     path('center_write/', views.center_write, name='center_write'),
     path('center/', views.center, name='center'),
-
+    path('start/', views.start, name='start'),
     # api
     path('api/', include(api_patterns)),
 ]
