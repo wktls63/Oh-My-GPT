@@ -3,12 +3,10 @@
 
 ## 추가 ##
 .secrets
-requirements.txt
 __pycache__
 .secrets/
 omg_env
 omg_env/
-requirements.txt
 
 
 ### Django ###
