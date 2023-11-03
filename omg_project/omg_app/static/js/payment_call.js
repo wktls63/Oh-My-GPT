@@ -173,7 +173,8 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
         subscription_product_id: subscription_product_id
 
     })
-    const response = await fetch('http://oh-my-gpt.com/validation', data)
+
+    const response = await fetch('http://oh-my-gpt.com/api/validation', data)
 
     if (response.status === 200) {
 

@@ -21,7 +21,8 @@
 1. [**웹 서비스 소개**](#1)
 2. [**개발 기간 및 일정**](#2)
 3. [**기술 스택**](#3)
-4. [**협업 방식**](#4)
+4. [**문서**](#4)
+5. [**협업 방식**](#5)
 
 </br>
 
@@ -44,15 +45,42 @@
 
 <div id="2"></div>
 
-## 📅 개발 기간 및 일정
+## 🔖  Oh My GPT ERD
 ---
-<p>
-  2023.10.10(화) ~ 2023.11.03(금)<br/>
-</p>
+
+  ![image](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/107481916/f3eaaa98-e47d-4966-b27d-ee69fd522af2)
+
+<br/>
+
 
 <br />
 
 <div id="3"></div>
+
+## 📈 Git Branch 전략
+---
+<p>
+  - 개발은 로컬 환경에서 작업 단위로 `feature` branch를 생성해서 개발 및 테스트 후, remote `feature` branch로 푸시하고 remote `develop` branch에 PR을 생성하여 코드 리뷰 후에 병합합니다. 그 후, `develop` 와 `main` branch 간 commit 수 차이가 10개 이상 벌어지면 `main` 브랜치에 PR을 생성하여 병합합니다.
+
+
+- 기본 브랜치 : `main` 브랜치로 항상 존재하는 브랜치
+- 보조 브랜치 : `각 목적에 맞게 사용`하며 기본 브랜치에 병합하고 더 이상 사용하지 않으면 삭제
+    - feature(기능) / bugfix(버그 수정) / hotfix(긴급 버그 수정) / refactor(리팩토링) / docs(문서) / test(테스트) / conf(설정)
+</p>
+
+<br />
+
+<div id="4"></div>
+
+## 📅 개발 기간 및 일정
+---
+<p>
+  2023.10.10(화) ~ 2023.11.28(화)<br/>
+</p>
+
+<br />
+
+<div id="4"></div>
 
 ## 🛠 기술 스택
 ---
@@ -75,10 +103,26 @@
 </div>
 
 </td><td valign="top" width="33%">
+</br>
+
+<div id="5"></div>
+
+## 📜 문서
+---
+
+<div>
+  <a href='http://oreumi.site:1217/docs#/'>Fast API Docs</a>
+</div>
+<div>
+  <a href='https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/wiki/Oh-My-GPT-API-Reference'>Oh-My-GPT-API-Reference</a>
+</div>
+<div>
+  <a href='https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/wiki/Oh-My-GPT-%EA%B8%B0%EB%8A%A5-%EB%AA%85%EC%84%B8%EC%84%9C'>Oh-My-GPT 기능 명세서</a>
+</div>
 
 </br>
 
-<div id="4"></div>
+<div id="5"></div>
 
 ## 👨‍👨‍👦‍👦 협업 방식
 ---
