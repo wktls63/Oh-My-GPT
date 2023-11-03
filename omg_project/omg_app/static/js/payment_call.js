@@ -9,7 +9,7 @@ function getCookie(name) {
 
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            
+
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -20,16 +20,16 @@ function getCookie(name) {
 }
 
 // fetch 함수 정의
-function setFetchData(method, body){
+function setFetchData(method, body) {
     /* Fetch data 셋팅 */
 
-    let csrftoken   = getCookie('csrftoken');
+    let csrftoken = getCookie('csrftoken');
 
     const data = {
         method: method,
         headers: {
             'content-type': 'application/json',
-            'X-CSRFToken' : csrftoken,        
+            'X-CSRFToken': csrftoken,
         },
         body: JSON.stringify(body)
     }
@@ -37,8 +37,8 @@ function setFetchData(method, body){
     return data
 }
 
-let uuidCode = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+let uuidCode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
 
 // 결제하기 버튼
 // Oh my Gpt Pro
@@ -57,8 +57,8 @@ omgEnterPrise.addEventListener('click', requestPaygptEnterPrise)
 
 
 // 가맹 식별 코드
-var IMP = window.IMP; 
-IMP.init("imp11624762"); 
+var IMP = window.IMP;
+IMP.init("imp11624762");
 
 // Oh My GPT 상품 목록 가져오기
 const subScripTionList = await getSubscriptionList();
@@ -79,22 +79,22 @@ function requestPaygptPro() {
     if (confirm("결제 하시겠습니까?")) {
 
         IMP.request_pay({
-            pg : 'html5_inicis',
-            pay_method : 'card',
-            merchant_uid: uuidCode, 
-            name : gptPro.item_name,
-            amount : gptPro.amount,
-            buyer_email : 'Iamport@chai.finance',
-            buyer_name : '아임포트 기술지원팀',
-            buyer_tel : '010-1234-5678',
-            buyer_addr : '서울특별시 강남구 삼성동',
-            buyer_postcode : '123-456',
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: uuidCode,
+            name: gptPro.item_name,
+            amount: gptPro.amount,
+            buyer_email: 'Iamport@chai.finance',
+            buyer_name: '아임포트 기술지원팀',
+            buyer_tel: '010-1234-5678',
+            buyer_addr: '서울특별시 강남구 삼성동',
+            buyer_postcode: '123-456',
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp);
                 console.log('결제가 완료되었습니다.');
                 const itemcode = 1
-                    storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
+                storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
             } else {
                 console.log(rsp);
             }
@@ -108,23 +108,23 @@ function requestPaygptProPlus() {
     if (confirm("결제 하시겠습니까?")) {
 
         IMP.request_pay({
-            pg : 'html5_inicis',
-            pay_method : 'card',
-            merchant_uid: uuidCode, 
-            name : gptProPlust.item_name,
-            amount : gptProPlust.amount,
-            buyer_email : 'Iamport@chai.finance',
-            buyer_name : '아임포트 기술지원팀',
-            buyer_tel : '010-1234-5678',
-            buyer_addr : '서울특별시 강남구 삼성동',
-            buyer_postcode : '123-456',
-            itemcode : 2
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: uuidCode,
+            name: gptProPlust.item_name,
+            amount: gptProPlust.amount,
+            buyer_email: 'Iamport@chai.finance',
+            buyer_name: '아임포트 기술지원팀',
+            buyer_tel: '010-1234-5678',
+            buyer_addr: '서울특별시 강남구 삼성동',
+            buyer_postcode: '123-456',
+            itemcode: 2
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp);
                 console.log('결제가 완료되었습니다.');
                 const itemcode = 2
-                    storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
+                storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
             } else {
                 console.log(rsp);
             }
@@ -138,23 +138,23 @@ function requestPaygptEnterPrise() {
     if (confirm("결제 하시겠습니까?")) {
 
         IMP.request_pay({
-            pg : 'html5_inicis',
-            pay_method : 'card',
-            merchant_uid: uuidCode, 
-            name : gptEnterPrise.item_name,
-            amount : gptEnterPrise.amount,
-            buyer_email : 'Iamport@chai.finance',
-            buyer_name : '아임포트 기술지원팀',
-            buyer_tel : '010-1234-5678',
-            buyer_addr : '서울특별시 강남구 삼성동',
-            buyer_postcode : '123-456',
-            itemcode : 3
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: uuidCode,
+            name: gptEnterPrise.item_name,
+            amount: gptEnterPrise.amount,
+            buyer_email: 'Iamport@chai.finance',
+            buyer_name: '아임포트 기술지원팀',
+            buyer_tel: '010-1234-5678',
+            buyer_addr: '서울특별시 강남구 삼성동',
+            buyer_postcode: '123-456',
+            itemcode: 3
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp);
                 console.log('결제가 완료되었습니다.');
                 const itemcode = 3
-                    storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
+                storeImpIdInDB(rsp.merchant_uid, rsp.paid_amount, rsp.status, itemcode);
             } else {
                 console.log(rsp);
             }
@@ -165,15 +165,15 @@ function requestPaygptEnterPrise() {
 
 // 결제 완료 후, 포트원에서 보낸 결제번호를 DB에 저장
 async function storeImpIdInDB(merchant_id, amount, status, subscription_product_id) {
-    
+
     const data = setFetchData('POST', {
         merchant_id: merchant_id,
         amount: amount,
-        status: status, 
-        subscription_product_id : subscription_product_id
+        status: status,
+        subscription_product_id: subscription_product_id
 
     })
-    const response = await fetch('http://52.78.40.84:80/validation', data)
+    const response = await fetch('http://oh-my-gpt.com/validation', data)
 
     if (response.status === 200) {
 
@@ -195,8 +195,8 @@ async function storeImpIdInDB(merchant_id, amount, status, subscription_product_
 }
 
 async function getSubscriptionList() {
-    const response = await fetch('http://52.78.40.84:80/api/subscription');
+    const response = await fetch('http://oh-my-gpt.com/api/subscription');
     const data = await response.json();
     return data;
-  }
+}
 
