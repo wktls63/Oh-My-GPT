@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib import messages
 
 from ..models import Message, ChatRoom, User, AIModel
 
@@ -29,13 +30,17 @@ def chat(request):
         type: 페이지
         chat_list: 사용자에 참여한 채팅방 목록
     """
-     # JWT 토큰에서 사용자 가져오기
-    access_token = request.COOKIES.get('access')
-    refresh_token = request.COOKIES.get('refresh')    
+    try:
+        # JWT 토큰에서 사용자 가져오기
+        access_token = request.COOKIES.get('access')
+        refresh_token = request.COOKIES.get('refresh')    
 
-    payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
-    user = User.objects.filter(id=payload['user_id']).first()
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
+        user = User.objects.filter(id=payload['user_id']).first()
     
+    except Exception as e:
+        return redirect('index')
+        
     # 김나영밖에 모르는 GPT와 민원 GPT 기본 생성
     if user:
         default_model1 = AIModel.objects.get_or_create(model_id="05510328-7794-11ee-b962-0242ac120002", model_name="김나영밖에 모르는 GPT", user_id=user)[0]
@@ -57,6 +62,7 @@ def chat(request):
     }
     
     return render(request, 'chat.html', context)
+
 
 def messages(request, chat_id) :
     """
