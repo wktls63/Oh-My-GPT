@@ -172,6 +172,7 @@
     const USER_ID = {{user_id}};
 
     let currChatId = '0'; 
+    let target = [];
 
     async function initChat(chatId, modelName) {
         currChatId = chatId;
@@ -206,10 +207,31 @@
             let html = '';
             if (data.sender == 'user') { 
                 html = getFromMeHtml(data.message); 
+                chatContainer.insertAdjacentHTML('beforeend', html);
+                
+                const fromMeList = document.querySelectorAll('.message-box.from-me');
+                const loadingElem = fromMeList[fromMeList.length-1];
+                
+                console.log("loadingElem");
+                console.log(loadingElem);
+                
+                const imgHtml = '<img class="loading-img" src="/static/img/loading.gif" width="">';
+                const messageText= loadingElem.querySelector('.message-text');
+
+                console.log("messageText");
+                console.log(messageText);
+
+                messageText.innerHTML += imgHtml;
+            
             } else { 
                 html = getFromYouHtml(data.message); 
+                chatContainer.insertAdjacentHTML('beforeend', html);
+                const loadingImgs = document.querySelectorAll('.loading-img');
+                console.log(loadingImgs); 
+                for (let loadingImg of loadingImgs) {
+                    loadingImg.remove();
+                }
             }
-            chatContainer.insertAdjacentHTML('beforeend', html);
             moveScrollToBottom();
         }
 
@@ -221,7 +243,7 @@
 
     // 스크롤을 최하단으로 내려주는 함수
     function moveScrollToBottom() {
-        const chatContainer = document.querySelector('.chat-container');
+        const chatContainer = document.querySelector('.chat-main-container');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 

@@ -5,7 +5,7 @@ const container = document.getElementById('container');
 // 로그인 관련
 const signInButton = document.getElementById('signIn');
 
-signInButton.addEventListener('click', function() {
+signInButton.addEventListener('click', function () {
   container.classList.remove("right-panel-active");
 });
 
@@ -13,7 +13,7 @@ signInButton.addEventListener('click', function() {
 // 회원가입 관련
 const signUpButton = document.getElementById('signUp');
 
-signUpButton.addEventListener('click', function() {
+signUpButton.addEventListener('click', function () {
   container.classList.add("right-panel-active");
 });
 
@@ -27,33 +27,33 @@ function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
 
-      const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(';');
 
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
+    }
   }
   return cookieValue;
 }
 
 
-function setFetchData(method, body){
+function setFetchData(method, body) {
   /* Fetch data 셋팅 */
 
-  let csrftoken   = getCookie('csrftoken');
+  let csrftoken = getCookie('csrftoken');
 
   const data = {
-      method: method,
-      headers: {
-          'content-type': 'application/json',
-          'X-CSRFToken' : csrftoken,        
-      },
-      body: JSON.stringify(body)
+    method: method,
+    headers: {
+      'content-type': 'application/json',
+      'X-CSRFToken': csrftoken,
+    },
+    body: JSON.stringify(body)
   }
 
   return data
@@ -64,30 +64,30 @@ function setFetchData(method, body){
 
 // 로그인 등록 버튼
 const loginButton = document.querySelector('#sign-in-btn')
-loginButton.addEventListener('click', function(event) {
+loginButton.addEventListener('click', function (event) {
   event.preventDefault();
   login();
 })
 
 // 로그인 이벤트
 async function login() {
-    // email, password, password
-    console.log(document.querySelector('#sign-in-email'));
-    console.log(document.querySelector('#sign-in-password'));
-    const email = document.querySelector('#sign-in-email').value;
-    const password = document.querySelector('#sign-in-password').value;
+  // email, password, password
+  console.log(document.querySelector('#sign-in-email'));
+  console.log(document.querySelector('#sign-in-password'));
+  const email = document.querySelector('#sign-in-email').value;
+  const password = document.querySelector('#sign-in-password').value;
 
-    const data = setFetchData("post", {
-        "email" : email,
-        "password" : password,
-    })
+  const data = setFetchData("post", {
+    "email": email,
+    "password": password,
+  })
 
-    const login_response = await fetch('http://52.78.40.84:80/api/auth', data);
+  const login_response = await fetch('http://oh-my-gpt.com/api/auth', data);
 
-    if(login_response.status == 200) {
-        alert('로그인 성공!')
-        location.href = 'http://52.78.40.84:80/'
-    } else {
-        alert("사용자명과 비밀번호를 확인해 주세요.")
-    }
+  if (login_response.status == 200) {
+    alert('로그인 성공!')
+    location.href = 'http://oh-my-gpt.com/'
+  } else {
+    alert("사용자명과 비밀번호를 확인해 주세요.")
+  }
 }
