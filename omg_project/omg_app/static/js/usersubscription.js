@@ -9,7 +9,7 @@ function getCookie(name) {
 
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            
+
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -20,16 +20,16 @@ function getCookie(name) {
 }
 
 // fetch 함수 정의
-function setFetchData(method, body){
+function setFetchData(method, body) {
     /* Fetch data 셋팅 */
 
-    let csrftoken   = getCookie('csrftoken');
+    let csrftoken = getCookie('csrftoken');
 
     const data = {
         method: method,
         headers: {
             'content-type': 'application/json',
-            'X-CSRFToken' : csrftoken,        
+            'X-CSRFToken': csrftoken,
         },
         body: JSON.stringify(body)
     }
@@ -79,8 +79,8 @@ function setFetchData(method, body){
 
 
 async function getUserSubscriptionList() {
-    const response = await fetch('http://52.78.40.84:80/api/usersubscription');
+    const response = await fetch('http://oh-my-gpt.com/api/usersubscription');
     const data = await response.json();
     return data;
-  }
+}
 
