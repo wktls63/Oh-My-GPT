@@ -37,7 +37,9 @@
 
 ### 추후 개발 방향
   <div align="center">
-    <img src="https://velog.velcdn.com/images/minokimm/post/cebd3d53-ac85-4b73-8e0b-0d2b5ab6a12e/image.png" width="80%"/ >
+    
+   ![O M G  Oh my girl (7)](https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/assets/81272766/5ac7c00b-6809-4a9a-9d60-d5b44b73336a)
+
   </div>
 
 
