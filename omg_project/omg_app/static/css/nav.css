@@ -78,3 +78,8 @@ body {
 .user-buttons a:hover {
     text-shadow: -1px 0 skyblue, 0 1px skyblue, 1px 0 skyblue, 0 -1px skyblue;
 }
+
+
+.grade_button a:hover {
+    text-shadow: none;
+}
