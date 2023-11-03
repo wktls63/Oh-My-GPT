@@ -171,7 +171,7 @@ def index(request):
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
         user = User.objects.get(id=payload["user_id"]).id
         try:
-            user_grade = Payment.objects.get(user_id = user).payment_status
+            user_grade = Payment.objects.get(user_id = user).subscription_product_id
         except:
             user_grade = None
 
@@ -196,7 +196,7 @@ def intro(request):
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
         user = User.objects.get(id=payload["user_id"]).id
         try:
-            user_grade = Payment.objects.get(user_id = user).payment_status
+            user_grade = Payment.objects.get(user_id = user).subscription_product_id
         except:
             user_grade = None
 
@@ -220,7 +220,7 @@ def center_write(request):
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
         user = User.objects.get(id=payload["user_id"]).id
         try:
-            user_grade = Payment.objects.get(user_id = user).payment_status
+            user_grade = Payment.objects.get(user_id = user).subscription_product_id
         except:
             user_grade = None
 
@@ -244,7 +244,7 @@ def payment(request):
         payload = jwt.decode(access_token, SECRET_KEY, algorithms='HS256')
         user = User.objects.get(id=payload["user_id"]).id
         try:
-            user_grade = Payment.objects.get(user_id = user).payment_status
+            user_grade = Payment.objects.get(user_id = user).subscription_product_id
         except:
             user_grade = None
 
