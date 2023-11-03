@@ -83,7 +83,12 @@
 ## 📜 문서
 ---
 
-<a href='http://oreumi.site:1217/docs#/'>Fast API 문서</a>
+<div>
+  <a href='http://oreumi.site:1217/docs#/'>Fast API Docs</a>
+</div>
+<div>
+  <a href='https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/wiki/Oh-My-GPT-API-Reference'>Oh-My-GPT-API-Reference</a>
+</div>
 
 </br>
 
