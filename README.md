@@ -21,7 +21,8 @@
 1. [**웹 서비스 소개**](#1)
 2. [**개발 기간 및 일정**](#2)
 3. [**기술 스택**](#3)
-4. [**협업 방식**](#4)
+4. [**문서**](#4)
+5. [**협업 방식**](#5)
 
 </br>
 
@@ -75,10 +76,23 @@
 </div>
 
 </td><td valign="top" width="33%">
+</br>
+
+<div id="5"></div>
+
+## 📜 문서
+---
+
+<div>
+  <a href='http://oreumi.site:1217/docs#/'>Fast API Docs</a>
+</div>
+<div>
+  <a href='https://github.com/wonjo-oh-my-girl/kdt-oh-my-gpt/wiki/Oh-My-GPT-API-Reference'>Oh-My-GPT-API-Reference</a>
+</div>
 
 </br>
 
-<div id="4"></div>
+<div id="5"></div>
 
 ## 👨‍👨‍👦‍👦 협업 방식
 ---
