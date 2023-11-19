@@ -4,8 +4,8 @@
 
 </br>
 <p align="center">
-  <b>"공공데이터를 활용한 사용자 맞춤형 GPT 서비스!"</b></br>
-  <a>제 5회 K-Digital Training 해커톤 참가팀 <b>"OMG: Oh! My GPT"</b>입니다.</a>
+  <b>"GPT를 기반으로 사용자에게 민원 데이터 및 맞춤형 데이터를 학습한 </br> 대화형 AI 서비스를 제공합니다."</b></br>
+  <a>제 5회 K-Digital Training 해커톤 입상팀 <b>"OMG: Oh! My GPT"</b>입니다.</a>
 </p>
 
 <div align="center">
