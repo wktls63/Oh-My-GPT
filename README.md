@@ -5,7 +5,7 @@
 </br>
 <p align="center">
   <b>"GPT를 기반으로 사용자에게 민원 데이터 및 맞춤형 데이터를 학습한 </br> 대화형 AI 서비스를 제공합니다."</b></br>
-  <a>제 5회 K-Digital Training 해커톤 입상팀 <b>"OMG: Oh! My GPT"</b>입니다.</a>
+  <a>제 5회 K-Digital Training 해커톤 고용노동부장관상 수상 <b>"OMG: Oh! My GPT"</b>입니다.</a>
 </p>
 
 <div align="center">
