@@ -1,5 +1,5 @@
 body {
-    background-color: rgba(52,53,65,1);
+    background-color: rgba(70,130,165,1); 
     overflow: hidden;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -30,15 +30,15 @@ body::-webkit-scrollbar {
 .post-box {
     display: flex;
     align-items: center;
-    border: 1px solid rgba(32,33,35,.5);
+    border: 1px solid rgba(3,23,36,1);
     align-items: stretch;
     height: 100%;
 }
 
 .chat-select-container {
     width: 320px;
-    background-color: rgba(32,33,35,1);
-    border-right: 1px solid rgba(32,33,35,.5);
+    background-color: rgba(3,23,36,1);
+    border-right: 1px solid rgba(3,23,36,1);
     display: flex;
     flex-direction: column;
     padding: .5rem;
@@ -99,7 +99,7 @@ body::-webkit-scrollbar {
 }
 
 .big-title {
-    background-color: rgba(32,33,35,1);
+    background-color: rgba(3,23,36,1);;
     color: rgba(142,142,160,1);
     font-size: .75rem;
     line-height: 1rem;
@@ -262,6 +262,10 @@ body::-webkit-scrollbar {
     position: relative;
 }
 
+.user-img img {
+    filter: invert(1);
+}
+
 .user-name {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -286,7 +290,7 @@ body::-webkit-scrollbar {
 }
 
 .contact-info {
-    color: rgba(217,217,227,.8);
+    color: white;
     padding: 20px;
     border-bottom: 1px solid rgba(32,33,35,.5);
     justify-content: center;
@@ -326,7 +330,7 @@ body::-webkit-scrollbar {
 }
 
 .from-you.message-box {
-    background-color: rgba(68,70,84,1);
+    background-color: rgba(3,23,36,0.5);
 }
 
 .from-me div {
@@ -339,7 +343,7 @@ body::-webkit-scrollbar {
 
 .message-text {
     height: fit-content;
-    color: rgba(217,217,227,.8);
+    color: rgba(217,217,227,.9);
     width: 100%;
     /* max-width: 48rem; */
     line-height: 1.8;
@@ -363,7 +367,7 @@ body::-webkit-scrollbar {
 
 .chat-input input {
     color: whitesmoke;
-    background-color: rgba(64,65,79,1);
+    background-color: rgba(3,23,36,0.5);
     width: -webkit-fill-available;
     display: block;
     border: none;
@@ -402,6 +406,7 @@ body::-webkit-scrollbar {
     width: 24px;
     height: 24px;
     object-fit: contain;
+    filter: invert(1);
 }
 
 .disable {
